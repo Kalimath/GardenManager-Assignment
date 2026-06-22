@@ -19,8 +19,11 @@ public class AddGardenShould : GardenServiceTestBase
     {
         await GardenService.AddGarden(SomeGardenDto);
         
-        await GardenRepository
+        GardenRepository
             .Received(1)
             .Add(Arg.Is(SomeGarden));
+        await GardenRepository
+            .Received(1)
+            .SaveChangesAsync();
     }
 }

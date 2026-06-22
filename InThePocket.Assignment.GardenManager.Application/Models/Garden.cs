@@ -1,3 +1,5 @@
+using InThePocket.Assignment.GardenManager.Application.Models.Identity;
+
 namespace InThePocket.Assignment.GardenManager.Application.Models;
 
 public class Garden

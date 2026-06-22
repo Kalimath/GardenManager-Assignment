@@ -10,6 +10,7 @@ public class GardenService(IGardenMapper gardenMapper, IRepository<Models.Garden
     {
         var model = gardenMapper.MapToModel(gardenDto);
 
-        await gardenRepository.Add(model);
+        gardenRepository.Add(model);
+        await gardenRepository.SaveChangesAsync();
     }
 }

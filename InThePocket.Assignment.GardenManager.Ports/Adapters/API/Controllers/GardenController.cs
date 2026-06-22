@@ -7,12 +7,14 @@ namespace InThePocket.Assignment.GardenManager.Ports.Adapters.API.Controllers;
 
 [ApiController]
 [Produces("application/json")]
+[Route("api/v1/[controller]")]
 public class GardenController(IValidator<GardenDto> gardenDtoValidator, IGardenService gardenService) : ControllerBase, IGardenController
 {
 
-    [HttpPost("/garden")]
+    [HttpPost]
     [ValidateAntiForgeryToken]
     [ProducesResponseType(201)]
+    [ProducesResponseType(400)]
     public async Task<ActionResult> AddGarden(GardenDto gardenDto)
     {
         var validationResult = await gardenDtoValidator.ValidateAsync(gardenDto);

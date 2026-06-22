@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InThePocket.Assignment.GardenManager.Ports", "InThePocket.Assignment.GardenManager.Ports\InThePocket.Assignment.GardenManager.Ports.csproj", "{3A33D183-B5C0-4837-88C1-B4F4D90A8A49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InThePocket.Assignment.GardenManager.Ports.Tests", "InThePocket.Assignment.GardenManager.Ports.Tests\InThePocket.Assignment.GardenManager.Ports.Tests.csproj", "{5186E0DC-6249-4B77-97BE-B3DAB3D7E5C9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A33D183-B5C0-4837-88C1-B4F4D90A8A49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A33D183-B5C0-4837-88C1-B4F4D90A8A49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A33D183-B5C0-4837-88C1-B4F4D90A8A49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A33D183-B5C0-4837-88C1-B4F4D90A8A49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5186E0DC-6249-4B77-97BE-B3DAB3D7E5C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5186E0DC-6249-4B77-97BE-B3DAB3D7E5C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5186E0DC-6249-4B77-97BE-B3DAB3D7E5C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5186E0DC-6249-4B77-97BE-B3DAB3D7E5C9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

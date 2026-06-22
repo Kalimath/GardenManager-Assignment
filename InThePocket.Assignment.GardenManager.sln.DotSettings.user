@@ -4,5 +4,7 @@
     &lt;TestId&gt;xUnit::5186E0DC-6249-4B77-97BE-B3DAB3D7E5C9::net8.0::InThePocket.Assignment.GardenManager.Ports.Tests.Adapters.API.Controllers.GardenControllerTests.AddGardenShould&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::1963064D-1FCD-4279-A0A5-CC5A47FA4B69::net8.0::InThePocket.Assignment.GardenManager.Application.Tests.Services.GardenServiceTests.AddGardenShould.CallGardenMapper&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::1963064D-1FCD-4279-A0A5-CC5A47FA4B69::net8.0::InThePocket.Assignment.GardenManager.Application.Tests.Services.GardenServiceTests.AddGardenShould&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::1963064D-1FCD-4279-A0A5-CC5A47FA4B69::net8.0::InThePocket.Assignment.GardenManager.Application.Tests.Mappers.GardenMapperTests.MapToModel_GivenGardenDto_ReturnsCorrectGardenModel&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::1963064D-1FCD-4279-A0A5-CC5A47FA4B69::net8.0::InThePocket.Assignment.GardenManager.Application.Tests.Mappers.Garden.GardenMapperTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

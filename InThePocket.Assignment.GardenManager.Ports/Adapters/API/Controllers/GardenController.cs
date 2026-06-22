@@ -10,8 +10,8 @@ public class GardenController(IValidator<GardenDto> gardenDtoValidator) : Contro
 
     public async Task<ActionResult> AddGarden(GardenDto gardenDto)
     {
-        _ = await gardenDtoValidator.ValidateAsync(gardenDto);
+        var validationResult = await gardenDtoValidator.ValidateAsync(gardenDto);
 
-        return BadRequest();
+        return BadRequest(validationResult);
     }
 }

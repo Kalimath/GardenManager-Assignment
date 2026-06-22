@@ -1,3 +1,4 @@
+using FluentValidation.Results;
 using InThePocket.Assignment.GardenManager.Contracts.Dto;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,35 @@ public class AddGardenShould : GardenControllerTestBase
     {
         var result = await GardenController.AddGarden(null!);
         
-        Assert.IsType<BadRequestResult>(result);
+        Assert.IsType<BadRequestObjectResult>(result);
+    }
+
+    [Fact]
+    public async Task ReturnBadRequestWithErrors_WhenGardenDtoNotValid()
+    {
+        var invalidGardenDto = new GardenDto
+        {
+            GardenName = string.Empty,
+            TotalSurfaceArea = -1.5,
+            LocationDescription = string.Empty
+        };
+        var validationResult = new ValidationResult
+        {
+            Errors = [
+                new ValidationFailure {PropertyName = "GardenName"},
+                new ValidationFailure {PropertyName = "TotalSurfaceArea"},
+                new ValidationFailure {PropertyName = "LocationDescription"}
+            ]
+        };
+        GardenDtoValidator
+            .ValidateAsync(invalidGardenDto)
+            .Returns(validationResult);
+        
+        var result = await GardenController.AddGarden(invalidGardenDto);
+
+        var response = Assert.IsType<BadRequestObjectResult>(result);
+        Assert.NotNull(response.Value);
+        Assert.False(((ValidationResult)response.Value).IsValid);
+        Assert.Equal(3, ((ValidationResult)response.Value).Errors.Count);
     }
 }

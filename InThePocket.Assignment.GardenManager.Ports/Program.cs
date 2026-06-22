@@ -1,4 +1,5 @@
 using FluentValidation;
+using InThePocket.Assignment.GardenManager.Ports;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,9 @@ var services = builder.Services;
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+services.AddControllers();
+
+services.RegisterDependencies();
 
 var app = builder.Build();
 

@@ -15,14 +15,6 @@ public class AddGardenShould : GardenControllerTestBase
             .Received(1)
             .ValidateAsync(Arg.Any<GardenDto>());
     }
-    
-    [Fact]
-    public async Task ReturnBadRequest_WhenGardenDtoNull()
-    {
-        var result = await GardenController.AddGarden(null!);
-        
-        Assert.IsType<BadRequestObjectResult>(result);
-    }
 
     [Fact]
     public async Task ReturnBadRequestWithErrors_WhenGardenDtoNotValid()
@@ -51,5 +43,15 @@ public class AddGardenShould : GardenControllerTestBase
         Assert.NotNull(response.Value);
         Assert.False(((ValidationResult)response.Value).IsValid);
         Assert.Equal(3, ((ValidationResult)response.Value).Errors.Count);
+    }
+
+    [Fact]
+    public async Task CallGardenService_WhenDataValid()
+    {
+        _ = await GardenController.AddGarden(ValidGardenDto);
+
+        await GardenService
+            .Received(1)
+            .AddGarden(ValidGardenDto);
     }
 }

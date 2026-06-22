@@ -21,6 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\InThePocket.Assignment.GardenManager.Application\InThePocket.Assignment.GardenManager.Application.csproj" />
       <ProjectReference Include="..\InThePocket.Assignment.GardenManager.Contracts\InThePocket.Assignment.GardenManager.Contracts.csproj" />
     </ItemGroup>
 

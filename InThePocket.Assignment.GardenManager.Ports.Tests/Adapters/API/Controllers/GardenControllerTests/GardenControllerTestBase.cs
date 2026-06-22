@@ -1,4 +1,5 @@
 using FluentValidation;
+using InThePocket.Assignment.GardenManager.Application.Services;
 using InThePocket.Assignment.GardenManager.Contracts.Dto;
 using InThePocket.Assignment.GardenManager.Ports.Adapters.API.Controllers;
 
@@ -15,11 +16,19 @@ public class GardenControllerTestBase
     
     protected readonly GardenController GardenController;
     protected readonly IValidator<GardenDto> GardenDtoValidator;
+    protected readonly IGardenService GardenService;
 
     protected GardenControllerTestBase()
     {
         GardenDtoValidator = Substitute.For<IValidator<GardenDto>>();
+        GardenService = Substitute.For<IGardenService>();
         
-        GardenController = new GardenController(GardenDtoValidator);
+        GardenController = new GardenController(GardenDtoValidator, GardenService);
+        
+        //substitutes
+        var validValidationResult = new FluentValidation.Results.ValidationResult();
+        _ = GardenDtoValidator
+            .ValidateAsync(Arg.Any<GardenDto>())
+            .Returns(validValidationResult);
     }
 }

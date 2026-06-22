@@ -1,4 +1,4 @@
-using InThePocket.Assignment.GardenManager.Application.Services;
+using InThePocket.Assignment.GardenManager.Application.Services.Garden;
 
 namespace InThePocket.Assignment.GardenManager.Ports;
 

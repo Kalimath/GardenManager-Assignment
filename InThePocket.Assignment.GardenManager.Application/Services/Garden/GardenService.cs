@@ -1,5 +1,4 @@
 using InThePocket.Assignment.GardenManager.Application.Mappers.Garden;
-using InThePocket.Assignment.GardenManager.Application.Tests.Services.GardenServiceTests;
 using InThePocket.Assignment.GardenManager.Contracts.Dto;
 
 namespace InThePocket.Assignment.GardenManager.Application.Services.Garden;

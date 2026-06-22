@@ -12,14 +12,16 @@ public class GardenServiceTestBase
     {
         GardenName = "Test Garden",
         TotalSurfaceArea = 23.5,
-        LocationDescription = "Test Location"
+        LocationDescription = "Test Location",
+        TargetHumidityLevel = 55
     };
 
     protected static readonly Garden SomeGarden = new()
     {
         GardenName = "Test Garden",
         TotalSurfaceArea = 23.5,
-        LocationDescription = "Test Location"
+        LocationDescription = "Test Location",
+        TargetHumidityLevel = 55
     };
 
     protected readonly GardenService GardenService;

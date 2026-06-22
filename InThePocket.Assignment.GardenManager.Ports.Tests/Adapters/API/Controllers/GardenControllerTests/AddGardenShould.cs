@@ -23,14 +23,16 @@ public class AddGardenShould : GardenControllerTestBase
         {
             GardenName = string.Empty,
             TotalSurfaceArea = -1.5,
-            LocationDescription = string.Empty
+            LocationDescription = string.Empty,
+            TargetHumidityLevel = 155
         };
         var validationResult = new ValidationResult
         {
             Errors = [
                 new ValidationFailure {PropertyName = "GardenName"},
                 new ValidationFailure {PropertyName = "TotalSurfaceArea"},
-                new ValidationFailure {PropertyName = "LocationDescription"}
+                new ValidationFailure {PropertyName = "LocationDescription"},
+                new ValidationFailure {PropertyName = "TargetHumidityLevel"}
             ]
         };
         GardenDtoValidator
@@ -42,7 +44,7 @@ public class AddGardenShould : GardenControllerTestBase
         var response = Assert.IsType<BadRequestObjectResult>(result);
         Assert.NotNull(response.Value);
         Assert.False(((ValidationResult)response.Value).IsValid);
-        Assert.Equal(3, ((ValidationResult)response.Value).Errors.Count);
+        Assert.Equal(4, ((ValidationResult)response.Value).Errors.Count);
     }
 
     [Fact]

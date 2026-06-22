@@ -1,4 +1,4 @@
-namespace InThePocket.Assignment.GardenManager.Application.Tests.Services.GardenServiceTests;
+namespace InThePocket.Assignment.GardenManager.Application;
 
 public interface IRepository<T> where T : class
 {

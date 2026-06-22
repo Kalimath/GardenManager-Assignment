@@ -6,4 +6,5 @@ public class Garden
     public string GardenName { get; init; }
     public double TotalSurfaceArea { get; init; }
     public string LocationDescription { get; init; }
+    public int TargetHumidityLevel { get; init; }
 }

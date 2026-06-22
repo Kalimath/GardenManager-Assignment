@@ -11,5 +11,6 @@ public sealed class GardenDtoValidator : AbstractValidator<GardenDto>
         RuleFor(g => g.GardenName).NotEmpty().WithMessage("Garden name must not be empty.");
         RuleFor(g => g.TotalSurfaceArea).GreaterThan(0).WithMessage("Total surface area must be greater than zero.");
         RuleFor(g => g.LocationDescription).NotEmpty().WithMessage("Location description must not be empty.");
+        RuleFor(g => g.TargetHumidityLevel).InclusiveBetween(0, 100).WithMessage("Target humidity level must be between 0 and 100.");
     }
 }

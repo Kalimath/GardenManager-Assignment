@@ -11,7 +11,8 @@ public class GardenControllerTestBase
     {
         GardenName = "some garden",
         TotalSurfaceArea = 100.1,
-        LocationDescription = "some location description"
+        LocationDescription = "some location description",
+        TargetHumidityLevel = 55
     };
     
     protected readonly GardenController GardenController;

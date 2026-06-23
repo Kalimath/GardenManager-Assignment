@@ -5,5 +5,5 @@ namespace InThePocket.Assignment.GardenManager.Ports.Adapters.API.Controllers;
 
 public interface IGardenController
 {
-    Task<ActionResult> AddGarden(GardenDto gardenDto);
+    Task<ActionResult> Create(GardenDto gardenDto);
 }

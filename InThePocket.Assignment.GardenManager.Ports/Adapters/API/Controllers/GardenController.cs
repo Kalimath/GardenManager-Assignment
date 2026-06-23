@@ -12,10 +12,9 @@ public class GardenController(IValidator<GardenDto> gardenDtoValidator, IGardenS
 {
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
     [ProducesResponseType(201)]
     [ProducesResponseType(400)]
-    public async Task<ActionResult> AddGarden(GardenDto gardenDto)
+    public async Task<ActionResult> Create(GardenDto gardenDto)
     {
         var validationResult = await gardenDtoValidator.ValidateAsync(gardenDto);
 

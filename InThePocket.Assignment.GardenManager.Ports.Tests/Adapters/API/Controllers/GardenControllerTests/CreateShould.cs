@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InThePocket.Assignment.GardenManager.Ports.Tests.Adapters.API.Controllers.GardenControllerTests;
 
-public class AddGardenShould : GardenControllerTestBase
+public class CreateShould : GardenControllerTestBase
 {
     [Fact]
     public async Task CallGardenDtoValidator()
     {
-        _ = await GardenController.AddGarden(ValidGardenDto);
+        _ = await GardenController.Create(ValidGardenDto);
         
         await GardenDtoValidator
             .Received(1)
@@ -39,7 +39,7 @@ public class AddGardenShould : GardenControllerTestBase
             .ValidateAsync(invalidGardenDto)
             .Returns(validationResult);
         
-        var result = await GardenController.AddGarden(invalidGardenDto);
+        var result = await GardenController.Create(invalidGardenDto);
 
         var response = Assert.IsType<BadRequestObjectResult>(result);
         Assert.NotNull(response.Value);
@@ -50,7 +50,7 @@ public class AddGardenShould : GardenControllerTestBase
     [Fact]
     public async Task CallGardenService_WhenDataValid()
     {
-        _ = await GardenController.AddGarden(ValidGardenDto);
+        _ = await GardenController.Create(ValidGardenDto);
 
         await GardenService
             .Received(1)

@@ -3,10 +3,15 @@ using InThePocket.Assignment.GardenManager.Application.Models.Identity;
 using InThePocket.Assignment.GardenManager.Application.Shared;
 using InThePocket.Assignment.GardenManager.Contracts.Api;
 using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
+using Microsoft.Extensions.Logging;
 
 namespace InThePocket.Assignment.GardenManager.Application.Services.Garden;
 
-public class GardenService(IGardenMapper gardenMapper, IRepository<Models.Garden> gardenRepository, IRepository<User> userRepository) : IGardenService
+public class GardenService(
+    IGardenMapper gardenMapper,
+    IRepository<Models.Garden> gardenRepository,
+    IRepository<User> userRepository,
+    ILogger<GardenService> logger) : IGardenService
 {
 
     public async Task AddGarden(GardenDto gardenDto)
@@ -46,9 +51,18 @@ public class GardenService(IGardenMapper gardenMapper, IRepository<Models.Garden
         await gardenRepository.SaveChangesAsync();
     }
 
-    public Task RemoveGarden(GardenReference reference)
+    public async Task RemoveGarden(GardenReference reference)
     {
-        throw new NotImplementedException();
+        await ThrowIdUserWithIdNotExists(reference.UserId);
+
+        var gardenToRemove =
+            await gardenRepository.Get(g => g.GardenId == reference.GardenId && g.User.Id == reference.UserId) 
+            ?? throw new NullReferenceException("The requested garden can not be found");
+        
+        gardenRepository.Delete(gardenToRemove);
+        await gardenRepository.SaveChangesAsync();
+        
+        logger.LogInformation("Garden with id {1} has been deleted by {2}.", reference.GardenId, reference.UserId);
     }
 
     private async Task ThrowIdUserWithIdNotExists(Guid userId)

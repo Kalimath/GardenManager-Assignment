@@ -39,4 +39,9 @@ public class Repository<T>(GardenManagerContext gardenManagerContext) : IReposit
         _modelDbSets.Attach(updateEntity);
         gardenManagerContext.Entry(updateEntity).State = EntityState.Modified;
     }
+
+    public void Delete(T entity)
+    {
+        _modelDbSets.Remove(entity);
+    }
 }

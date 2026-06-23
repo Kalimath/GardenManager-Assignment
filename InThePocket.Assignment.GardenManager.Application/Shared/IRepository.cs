@@ -11,4 +11,5 @@ public interface IRepository<T> where T : class
     Task<IEnumerable<T>> GetList(Expression<Func<T, bool>> predicate);
     Task<bool> Any(Expression<Func<T, bool>> predicate);
     void Update(T updateEntity);
+    void Delete(T entity);
 }

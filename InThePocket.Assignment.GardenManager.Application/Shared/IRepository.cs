@@ -1,8 +1,11 @@
-namespace InThePocket.Assignment.GardenManager.Application;
+using System.Linq.Expressions;
+
+namespace InThePocket.Assignment.GardenManager.Application.Shared;
 
 public interface IRepository<T> where T : class
 {
     void Add(T entity);
+    Task<T> Get(Expression<Func<T, bool>> predicate);
 
     Task<int> SaveChangesAsync();
 }

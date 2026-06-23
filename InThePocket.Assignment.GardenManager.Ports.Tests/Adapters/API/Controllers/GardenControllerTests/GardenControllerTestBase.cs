@@ -12,7 +12,8 @@ public class GardenControllerTestBase
         GardenName = "some garden",
         TotalSurfaceArea = 100.1,
         LocationDescription = "some location description",
-        TargetHumidityLevel = 55
+        TargetHumidityLevel = 55,
+        UserId = Guid.NewGuid()
     };
     
     protected readonly GardenController GardenController;

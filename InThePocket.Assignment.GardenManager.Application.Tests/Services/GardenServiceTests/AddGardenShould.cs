@@ -1,9 +1,21 @@
+using System.Linq.Expressions;
+using InThePocket.Assignment.GardenManager.Application.Models.Identity;
 using NSubstitute;
 
 namespace InThePocket.Assignment.GardenManager.Application.Tests.Services.GardenServiceTests;
 
 public class AddGardenShould : GardenServiceTestBase
 {
+    [Fact]
+    public async Task CallUserRepository_GetUser()
+    {
+        await GardenService.AddGarden(SomeGardenDto);
+        
+        await UserRepository
+            .Received(1)
+            .Get(Arg.Any<Expression<Func<User, bool>>>());
+    }
+    
     [Fact]
     public async Task CallGardenMapper()
     {

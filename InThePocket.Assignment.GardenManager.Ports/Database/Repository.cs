@@ -1,4 +1,5 @@
-using InThePocket.Assignment.GardenManager.Application;
+using System.Linq.Expressions;
+using InThePocket.Assignment.GardenManager.Application.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace InThePocket.Assignment.GardenManager.Ports.Database;
@@ -11,6 +12,11 @@ public class Repository<T>(GardenManagerContext gardenManagerContext) : IReposit
     public void Add(T entity)
     {
         _modelDbSets.Add(entity);
+    }
+
+    public Task<T> Get(Expression<Func<T, bool>> predicate)
+    {
+        throw new NotImplementedException();
     }
 
     public Task<int> SaveChangesAsync()

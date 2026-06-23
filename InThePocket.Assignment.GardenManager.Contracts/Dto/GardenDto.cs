@@ -7,5 +7,6 @@ namespace InThePocket.Assignment.GardenManager.Contracts.Dto
         public double TotalSurfaceArea { get; set; }
         public string LocationDescription { get; set; }
         public int TargetHumidityLevel { get; set; }
+        public Guid UserId { get; set; }
     }
 }

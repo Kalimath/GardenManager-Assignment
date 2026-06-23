@@ -59,4 +59,18 @@ public class GardenController(IValidator<GardenDto> gardenDtoValidator, IGardenS
             return BadRequest("Unable to retrieve gardens for the specified user");
         }
     }
+
+    [HttpPut]
+    [ProducesResponseType(202)]
+    [ProducesResponseType(400)]
+    public async Task<ActionResult> Update([FromBody] GardenDto updatedData)
+    {
+        var validationResult = await gardenDtoValidator.ValidateAsync(updatedData);
+
+        if (!validationResult.IsValid) return BadRequest(validationResult);
+        
+        await gardenService.UpdateGarden(updatedData);
+        
+        return Accepted();
+    }
 }

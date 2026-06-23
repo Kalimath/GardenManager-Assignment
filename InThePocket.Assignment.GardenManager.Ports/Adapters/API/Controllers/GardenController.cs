@@ -24,4 +24,14 @@ public class GardenController(IValidator<GardenDto> gardenDtoValidator, IGardenS
         return Created();
         
     }
+
+    [HttpGet]
+    public async Task<ActionResult> Get([FromBody] Guid gardenId)
+    {
+        if (gardenId.Equals(Guid.Empty)) return BadRequest("GardenId cannot be empty");
+        
+        var requested = await gardenService.GetGardenById(gardenId);
+        
+        return Ok(requested);
+    }
 }

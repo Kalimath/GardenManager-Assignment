@@ -19,4 +19,9 @@ public class GardenService(IGardenMapper gardenMapper, IRepository<Models.Garden
         gardenRepository.Add(model);
         await gardenRepository.SaveChangesAsync();
     }
+
+    public Task<GardenDto> GetGardenById(Guid gardenId)
+    {
+        throw new NotImplementedException();
+    }
 }

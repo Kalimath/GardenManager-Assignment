@@ -7,13 +7,23 @@ namespace InThePocket.Assignment.GardenManager.Ports.Tests.Adapters.API.Controll
 
 public class GardenControllerTestBase
 {
-    protected static readonly GardenDto ValidGardenDto = new()
+    private static readonly Guid SomeUserId = Guid.NewGuid();
+    protected static readonly GardenDto SomeValidGardenDto = new()
     {
         GardenName = "some garden",
         TotalSurfaceArea = 100.1,
         LocationDescription = "some location description",
         TargetHumidityLevel = 55,
-        UserId = Guid.NewGuid()
+        UserId = SomeUserId
+    };
+    protected static readonly GardenDto SomeGardenDtoWithId = new()
+    {
+        GardenId = Guid.NewGuid(),
+        GardenName = "some garden",
+        TotalSurfaceArea = 100.1,
+        LocationDescription = "some location description",
+        TargetHumidityLevel = 55,
+        UserId = SomeUserId
     };
     
     protected readonly GardenController GardenController;

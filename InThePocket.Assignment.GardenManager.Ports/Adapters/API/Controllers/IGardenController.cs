@@ -6,4 +6,5 @@ namespace InThePocket.Assignment.GardenManager.Ports.Adapters.API.Controllers;
 public interface IGardenController
 {
     Task<ActionResult> Create(GardenDto gardenDto);
+    Task<ActionResult> Get(Guid gardenId);
 }

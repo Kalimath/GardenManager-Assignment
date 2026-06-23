@@ -9,7 +9,7 @@ public class CreateShould : GardenControllerTestBase
     [Fact]
     public async Task CallGardenDtoValidator()
     {
-        _ = await GardenController.Create(SomeValidGardenDto);
+        _ = await GardenController.Create(SomeGardenDto);
         
         await GardenDtoValidator
             .Received(1)
@@ -52,10 +52,18 @@ public class CreateShould : GardenControllerTestBase
     [Fact]
     public async Task CallGardenService_WhenDataValid()
     {
-        _ = await GardenController.Create(SomeValidGardenDto);
+        _ = await GardenController.Create(SomeGardenDto);
 
         await GardenService
             .Received(1)
-            .AddGarden(SomeValidGardenDto);
+            .AddGarden(SomeGardenDto);
+    }
+    
+    [Fact]
+    public async Task ReturnCreated_WhenDataValid()
+    {
+        var result = await GardenController.Create(SomeGardenDto);
+
+        Assert.IsType<CreatedResult>(result);
     }
 }

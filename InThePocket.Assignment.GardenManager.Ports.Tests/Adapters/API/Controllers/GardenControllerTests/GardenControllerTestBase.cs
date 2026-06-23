@@ -13,7 +13,7 @@ public class GardenControllerTestBase
     protected static readonly Guid SomeGardenId = Guid.NewGuid();
 
     protected static readonly GardenReference SomeGardenReference = new() { GardenId = SomeGardenId, UserId = SomeUserId };
-    protected static readonly GardenDto SomeValidGardenDto = new()
+    protected static readonly GardenDto SomeGardenDto = new()
     {
         GardenName = "some garden",
         TotalSurfaceArea = 100.1,

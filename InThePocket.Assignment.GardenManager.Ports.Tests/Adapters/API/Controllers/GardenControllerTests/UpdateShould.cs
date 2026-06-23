@@ -9,7 +9,7 @@ public class UpdateShould : GardenControllerTestBase
     [Fact]
     public async Task CallGardenDtoValidator()
     {
-        _ = await GardenController.Update(SomeValidGardenDto);
+        _ = await GardenController.Update(SomeGardenDto);
         
         await GardenDtoValidator
             .Received(1)
@@ -54,17 +54,17 @@ public class UpdateShould : GardenControllerTestBase
     [Fact]
     public async Task CallGardenService_WhenDataValid()
     {
-        _ = await GardenController.Update(SomeValidGardenDto);
+        _ = await GardenController.Update(SomeGardenDto);
 
         await GardenService
             .Received(1)
-            .UpdateGarden(SomeValidGardenDto);
+            .UpdateGarden(SomeGardenDto);
     }
     
     [Fact]
     public async Task ReturnAccepted_WhenUpdateOrderSuccessfully()
     {
-        var result = await GardenController.Update(SomeValidGardenDto);
+        var result = await GardenController.Update(SomeGardenDto);
 
         var response = Assert.IsType<AcceptedResult>(result);
         Assert.Equal(202, response.StatusCode);

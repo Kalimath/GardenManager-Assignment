@@ -29,9 +29,16 @@ public class GardenController(
             return BadRequest(validationResult);
         }
 
-        await gardenService.AddGarden(gardenDto);
-        return Created();
-        
+        try
+        {
+            await gardenService.AddGarden(gardenDto);
+            return Created();
+        }
+        catch(Exception ex)
+        {
+            logger.LogError(ex, "Error creating garden for user {userId}", gardenDto.UserId);
+            return Problem("An error occurred while creating the garden.");
+        }
     }
 
     [HttpPost]

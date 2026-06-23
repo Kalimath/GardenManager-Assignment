@@ -13,10 +13,9 @@ public class GardenServiceTestBase
 {
     private static readonly Guid SomeUserId = Guid.NewGuid();
 
-    private static readonly User SomeUser = new()
+    protected static readonly User SomeUser = new()
     {
-        Id = Guid.NewGuid(),
-        UserId = SomeUserId,
+        Id = SomeUserId,
         FirstName = "John",
         LastName = "Doe",
         Age = 34,
@@ -55,7 +54,7 @@ public class GardenServiceTestBase
         
         //substitutes
         GardenMapper
-            .MapToModel(SomeGardenDto)
+            .MapToModel(SomeGardenDto, SomeUser)
             .Returns(SomeGarden);
         
         UserRepository

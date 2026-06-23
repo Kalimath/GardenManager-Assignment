@@ -31,7 +31,7 @@ public class GardenMapperTests
         TotalSurfaceArea = 23.5,
         LocationDescription = "Test Location",
         TargetHumidityLevel = 55,
-        User = SomeUser
+        UserId = SomeUserId
     };
 
     private readonly GardenMapper _gardenMapper = new();

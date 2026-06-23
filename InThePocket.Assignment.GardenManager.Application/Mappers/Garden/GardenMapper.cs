@@ -14,7 +14,7 @@ public class GardenMapper : IGardenMapper
             TotalSurfaceArea = gardenDto.TotalSurfaceArea,
             LocationDescription = gardenDto.LocationDescription,
             TargetHumidityLevel = gardenDto.TargetHumidityLevel,
-            User = user
+            UserId = gardenDto.UserId
         };
     }
 
@@ -26,7 +26,8 @@ public class GardenMapper : IGardenMapper
             GardenName = gardenModel.GardenName,
             TotalSurfaceArea = gardenModel.TotalSurfaceArea,
             LocationDescription = gardenModel.LocationDescription,
-            TargetHumidityLevel = gardenModel.TargetHumidityLevel
+            TargetHumidityLevel = gardenModel.TargetHumidityLevel,
+            UserId = gardenModel.UserId
         };
     }
 }

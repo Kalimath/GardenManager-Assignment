@@ -1,11 +1,10 @@
-using InThePocket.Assignment.GardenManager.Application.Models.Identity;
 using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
 
 namespace InThePocket.Assignment.GardenManager.Application.Mappers.Garden;
 
 public class GardenMapper : IGardenMapper
 {
-    public Models.Garden MapToModel(GardenDto gardenDto, User user)
+    public Models.Garden MapToModel(GardenDto gardenDto)
     {
         return new Models.Garden
         {

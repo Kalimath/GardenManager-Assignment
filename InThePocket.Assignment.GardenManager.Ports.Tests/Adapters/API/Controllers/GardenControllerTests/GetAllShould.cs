@@ -1,4 +1,5 @@
 using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute.ExceptionExtensions;
 
@@ -62,7 +63,7 @@ public class GetAllShould : GardenControllerTestBase
     }
     
     [Fact]
-    public async Task ReturnBadRequest_WhenGardenServiceThrowsNullReferenceException()
+    public async Task ReturnProblem_WhenGardenServiceThrows()
     {
         var unknownUserId = Guid.NewGuid();
         GardenService
@@ -71,7 +72,7 @@ public class GetAllShould : GardenControllerTestBase
         
         var result = await GardenController.GetAll(unknownUserId);
         
-        Assert.IsType<BadRequestObjectResult>(result);
+        Assert.IsType<ProblemHttpResult>(result);
     }
     
     

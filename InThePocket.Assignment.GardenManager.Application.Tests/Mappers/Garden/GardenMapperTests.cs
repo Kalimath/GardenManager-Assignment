@@ -7,6 +7,7 @@ namespace InThePocket.Assignment.GardenManager.Application.Tests.Mappers.Garden;
 public class GardenMapperTests
 {
     private static readonly Guid SomeUserId = Guid.NewGuid();
+    private static readonly Guid SomeGardenId = Guid.NewGuid();
 
     private static readonly User SomeUser = new()
     {
@@ -18,6 +19,7 @@ public class GardenMapperTests
     };
     private static readonly GardenDto SomeGardenDto = new()
     {
+        GardenId = SomeGardenId,
         GardenName = "Test Garden",
         TotalSurfaceArea = 23.5,
         LocationDescription = "Test Location",
@@ -27,6 +29,7 @@ public class GardenMapperTests
 
     private static readonly Models.Garden SomeGarden = new()
     {
+        GardenId = SomeGardenId,
         GardenName = "Test Garden",
         TotalSurfaceArea = 23.5,
         LocationDescription = "Test Location",
@@ -39,7 +42,7 @@ public class GardenMapperTests
     [Fact]
     public void MapToModel_GivenGardenDto_ReturnsCorrectGardenModel()
     {
-        var result = _gardenMapper.MapToModel(SomeGardenDto, SomeUser);
+        var result = _gardenMapper.MapToModel(SomeGardenDto);
         
         Assert.Equivalent(SomeGarden, result);
     }

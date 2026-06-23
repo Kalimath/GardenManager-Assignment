@@ -9,4 +9,6 @@ public interface IRepository<T> where T : class
 
     Task<int> SaveChangesAsync();
     Task<IEnumerable<T>> GetList(Expression<Func<T, bool>> predicate);
+    Task<bool> Any(Expression<Func<T, bool>> predicate);
+    void Update(T updateEntity);
 }

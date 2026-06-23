@@ -28,4 +28,15 @@ public class Repository<T>(GardenManagerContext gardenManagerContext) : IReposit
     {
         return await _modelDbSets.Where(predicate).ToListAsync<T>();
     }
+
+    public async Task<bool> Any(Expression<Func<T, bool>> predicate)
+    {
+        return await _modelDbSets.AnyAsync(predicate);
+    }
+
+    public void Update(T updateEntity)
+    {
+        _modelDbSets.Attach(updateEntity);
+        gardenManagerContext.Entry(updateEntity).State = EntityState.Modified;
+    }
 }

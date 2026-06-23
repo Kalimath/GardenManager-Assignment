@@ -9,7 +9,10 @@ namespace InThePocket.Assignment.GardenManager.Ports.Adapters.API.Controllers;
 [ApiController]
 [Produces("application/json")]
 [Route("api/v1/[controller]")]
-public class GardenController(IValidator<GardenDto> gardenDtoValidator, IGardenService gardenService) : ControllerBase, IGardenController
+public class GardenController(
+    IValidator<GardenDto> gardenDtoValidator,
+    IGardenService gardenService,
+    ILogger<GardenController> logger) : ControllerBase, IGardenController
 {
 
     [HttpPost]
@@ -19,8 +22,12 @@ public class GardenController(IValidator<GardenDto> gardenDtoValidator, IGardenS
     {
         var validationResult = await gardenDtoValidator.ValidateAsync(gardenDto);
 
-        if (!validationResult.IsValid) return BadRequest(validationResult);
-        
+        if (!validationResult.IsValid)
+        {
+            logger.LogError("Validation failed for garden creation: {errors}", validationResult.Errors);
+            return BadRequest(validationResult);
+        }
+
         await gardenService.AddGarden(gardenDto);
         return Created();
         
@@ -32,9 +39,18 @@ public class GardenController(IValidator<GardenDto> gardenDtoValidator, IGardenS
     [ProducesResponseType(400)]
     public async Task<ActionResult> Get([FromBody] GardenReference reference)
     {
-        if (reference.GardenId.Equals(Guid.Empty)) return BadRequest("GardenId cannot be empty");
-        if (reference.UserId.Equals(Guid.Empty)) return BadRequest("UserId cannot be empty");
-        
+        if (reference.GardenId.Equals(Guid.Empty))
+        {
+            logger.LogWarning("GardenId is empty in the {endpoint} request", nameof(Get));
+            return BadRequest("GardenId cannot be empty");
+        }
+
+        if (reference.UserId.Equals(Guid.Empty))
+        {
+            logger.LogWarning("UserId is empty in the {endpoint} request", nameof(Get));
+            return BadRequest("UserId cannot be empty");
+        }
+
         var requested = await gardenService.GetGardenByReference(reference);
         
         return Ok(requested);
@@ -48,7 +64,10 @@ public class GardenController(IValidator<GardenDto> gardenDtoValidator, IGardenS
     public async Task<ActionResult> GetAll(Guid userId)
     {
         if (userId == Guid.Empty)
+        {
+            logger.LogWarning("UserId is empty in the {endpoint} request", nameof(GetAll));
             return BadRequest("UserId cannot be empty");
+        }
 
         try
         {
@@ -56,7 +75,8 @@ public class GardenController(IValidator<GardenDto> gardenDtoValidator, IGardenS
         }
         catch(Exception ex)
         {
-            return BadRequest("Unable to retrieve gardens for the specified user");
+            logger.LogError(ex, "Error retrieving gardens for user {userId}", userId);
+            return Problem("Unable to retrieve gardens for the specified user");
         }
     }
 
@@ -67,9 +87,21 @@ public class GardenController(IValidator<GardenDto> gardenDtoValidator, IGardenS
     {
         var validationResult = await gardenDtoValidator.ValidateAsync(updatedData);
 
-        if (!validationResult.IsValid) return BadRequest(validationResult);
-        
-        await gardenService.UpdateGarden(updatedData);
+        if (!validationResult.IsValid)
+        {
+            logger.LogError("Validation failed for garden update: {errors}", validationResult.Errors);
+            return BadRequest(validationResult);
+        }
+
+        try
+        {
+            await gardenService.UpdateGarden(updatedData);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error updating garden with ID {gardenId}", updatedData.GardenId);
+            return Problem("An error occurred while updating the garden.");
+        }
         
         return Accepted();
     }

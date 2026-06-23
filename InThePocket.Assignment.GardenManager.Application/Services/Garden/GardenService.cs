@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using InThePocket.Assignment.GardenManager.Application.Mappers.Garden;
 using InThePocket.Assignment.GardenManager.Application.Models.Identity;
 using InThePocket.Assignment.GardenManager.Application.Shared;
@@ -12,9 +11,9 @@ public class GardenService(IGardenMapper gardenMapper, IRepository<Models.Garden
 
     public async Task AddGarden(GardenDto gardenDto)
     {
-        var currentUser = await GetCurrentUser(u => u.Id == gardenDto.UserId);
+        await ThrowIdUserWithIdNotExists(gardenDto.UserId);
 
-        var model = gardenMapper.MapToModel(gardenDto, currentUser);
+        var model = gardenMapper.MapToModel(gardenDto);
 
         gardenRepository.Add(model);
         await gardenRepository.SaveChangesAsync();
@@ -22,6 +21,8 @@ public class GardenService(IGardenMapper gardenMapper, IRepository<Models.Garden
 
     public async Task<GardenDto> GetGardenByReference(GardenReference reference)
     {
+        await ThrowIdUserWithIdNotExists(reference.UserId);
+        
         var gardenModel = await gardenRepository.Get(g => g.GardenId == reference.GardenId && g.User.Id == reference.UserId) 
                         ?? throw new NullReferenceException("The requested garden can not be found");
 
@@ -30,21 +31,31 @@ public class GardenService(IGardenMapper gardenMapper, IRepository<Models.Garden
 
     public async Task<GardenDto[]> GetGardensByUser(Guid userId)
     {
+        await ThrowIdUserWithIdNotExists(userId);
+        
         var gardenModels = await gardenRepository.GetList(g => g.User.Id == userId);
         
         return gardenModels.Select(gardenMapper.MapToDto).ToArray();
     }
 
-    public Task UpdateGarden(GardenDto updatedGardenDto)
+    public async Task UpdateGarden(GardenDto updatedGardenDto)
     {
-        throw new NotImplementedException();
+        await ThrowIdUserWithIdNotExists(updatedGardenDto.UserId);
+        
+        gardenRepository.Update(gardenMapper.MapToModel(updatedGardenDto));
+        await gardenRepository.SaveChangesAsync();
     }
 
-    private async Task<User> GetCurrentUser(Expression<Func<User,bool>> predicate)
+    private async Task ThrowIdUserWithIdNotExists(Guid userId)
     {
-        //Normally the user would be fetched from UserManager in the Ports layer. For the sake of this assignment, I fetch it from the repository.
-        var currentUser = await userRepository.Get(predicate) 
-                          ?? throw new NullReferenceException("The user for this garden could not be found");
-        return currentUser;
+        if (!await UserExists(userId))
+            throw new ArgumentException("User with given id does not exist");
+    }
+
+    private async Task<bool> UserExists(Guid userId)
+    {
+        //Normally the user would be managed by UserManager in the Ports layer.
+        //For the sake of this assignment, I kept it basic.
+        return await userRepository.Any(user => user.Id == userId);
     }
 }

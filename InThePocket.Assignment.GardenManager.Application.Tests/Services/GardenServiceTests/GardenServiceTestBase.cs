@@ -74,7 +74,7 @@ public class GardenServiceTestBase
         
         //substitutes
         GardenMapper
-            .MapToModel(SomeGardenDto, SomeUser)
+            .MapToModel(SomeGardenDto)
             .Returns(SomeGarden);
         GardenMapper
             .MapToDto(SomeGarden)
@@ -83,6 +83,9 @@ public class GardenServiceTestBase
         UserRepository
             .Get(Arg.Any<Expression<Func<User,bool>>>())
             .Returns(SomeUser);
+        UserRepository
+            .Any(Arg.Any<Expression<Func<User, bool>>>())
+            .Returns(true);
 
         GardenRepository
             .Get(Arg.Any<Expression<Func<Garden, bool>>>())

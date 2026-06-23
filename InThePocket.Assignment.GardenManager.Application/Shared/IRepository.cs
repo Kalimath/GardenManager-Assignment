@@ -8,4 +8,5 @@ public interface IRepository<T> where T : class
     Task<T?> Get(Expression<Func<T, bool>> predicate);
 
     Task<int> SaveChangesAsync();
+    Task<IEnumerable<T>> GetList(Expression<Func<T, bool>> predicate);
 }

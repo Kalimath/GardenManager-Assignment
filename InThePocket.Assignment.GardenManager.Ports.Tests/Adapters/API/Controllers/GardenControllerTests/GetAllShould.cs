@@ -62,16 +62,16 @@ public class GetAllShould : GardenControllerTestBase
     }
     
     [Fact]
-    public async Task ReturnUnauthorized_WhenGardenServiceThrowsUnauthorizedAccessException()
+    public async Task ReturnBadRequest_WhenGardenServiceThrowsNullReferenceException()
     {
         var unknownUserId = Guid.NewGuid();
         GardenService
             .GetGardensByUser(unknownUserId)
-            .Throws<UnauthorizedAccessException>();
-;
+            .Throws<NullReferenceException>();
+        
         var result = await GardenController.GetAll(unknownUserId);
         
-        Assert.IsType<UnauthorizedObjectResult>(result);
+        Assert.IsType<BadRequestObjectResult>(result);
     }
     
     

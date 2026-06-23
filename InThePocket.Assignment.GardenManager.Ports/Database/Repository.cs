@@ -23,4 +23,9 @@ public class Repository<T>(GardenManagerContext gardenManagerContext) : IReposit
     {
         return gardenManagerContext.SaveChangesAsync();
     }
+
+    public async Task<IEnumerable<T>> GetList(Expression<Func<T, bool>> predicate)
+    {
+        return await _modelDbSets.Where(predicate).ToListAsync<T>();
+    }
 }

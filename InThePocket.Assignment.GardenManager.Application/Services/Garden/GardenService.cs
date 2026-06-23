@@ -28,9 +28,11 @@ public class GardenService(IGardenMapper gardenMapper, IRepository<Models.Garden
         return gardenMapper.MapToDto(gardenModel);
     }
 
-    public Task<GardenDto[]> GetGardensByUser(Guid userId)
+    public async Task<GardenDto[]> GetGardensByUser(Guid userId)
     {
-        throw new NotImplementedException();
+        var gardenModels = await gardenRepository.GetList(g => g.User.Id == userId);
+        
+        return gardenModels.Select(gardenMapper.MapToDto).ToArray();
     }
 
     private async Task<User> GetCurrentUser(Expression<Func<User,bool>> predicate)

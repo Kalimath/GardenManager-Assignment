@@ -44,6 +44,7 @@ public class GardenController(IValidator<GardenDto> gardenDtoValidator, IGardenS
     [Route("All")]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
+    [ProducesResponseType(401)]
     public async Task<ActionResult> GetAll(Guid userId)
     {
         if (userId == Guid.Empty)
@@ -53,13 +54,9 @@ public class GardenController(IValidator<GardenDto> gardenDtoValidator, IGardenS
         {
             return Ok(await gardenService.GetGardensByUser(userId));
         }
-        catch (UnauthorizedAccessException ex)
+        catch(Exception ex)
         {
-            return Unauthorized(ex.Message);
-        }
-        catch(NullReferenceException ex)
-        {
-            return BadRequest("Data invalid");
+            return BadRequest("Unable to retrieve gardens for the specified user");
         }
     }
 }

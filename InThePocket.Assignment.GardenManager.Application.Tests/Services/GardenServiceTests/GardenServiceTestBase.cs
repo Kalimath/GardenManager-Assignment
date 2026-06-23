@@ -14,6 +14,8 @@ public class GardenServiceTestBase
 {
     protected static readonly Guid SomeUserId = Guid.NewGuid();
     protected static readonly Guid SomeGardenId = Guid.NewGuid();
+    protected static readonly Guid SomeOtherGardenId = Guid.NewGuid();
+    
     protected static readonly GardenReference SomeGardenReference = new()
     {
         GardenId = SomeGardenId,
@@ -44,6 +46,16 @@ public class GardenServiceTestBase
         TotalSurfaceArea = 23.5,
         LocationDescription = "Test Location",
         TargetHumidityLevel = 55,
+        User = SomeUser
+    };
+
+    protected static readonly Garden SomeOtherGarden = new()
+    {
+        GardenId = SomeOtherGardenId,
+        GardenName = "Test Garden 2",
+        TotalSurfaceArea = 24.3,
+        LocationDescription = "Test Location 2",
+        TargetHumidityLevel = 17,
         User = SomeUser
     };
 

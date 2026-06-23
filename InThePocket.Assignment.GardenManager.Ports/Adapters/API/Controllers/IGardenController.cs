@@ -8,4 +8,6 @@ public interface IGardenController
 {
     Task<ActionResult> Create(GardenDto gardenDto);
     Task<ActionResult> Get([FromBody] GardenReference reference);
+    Task<ActionResult> GetAll([FromBody] Guid userId);
+    
 }

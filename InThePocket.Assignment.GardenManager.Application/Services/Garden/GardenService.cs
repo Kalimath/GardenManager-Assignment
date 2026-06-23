@@ -28,6 +28,11 @@ public class GardenService(IGardenMapper gardenMapper, IRepository<Models.Garden
         return gardenMapper.MapToDto(gardenModel);
     }
 
+    public Task<GardenDto[]> GetGardensByUser(Guid userId)
+    {
+        throw new NotImplementedException();
+    }
+
     private async Task<User> GetCurrentUser(Expression<Func<User,bool>> predicate)
     {
         //Normally the user would be fetched from UserManager in the Ports layer. For the sake of this assignment, I fetch it from the repository.

@@ -39,4 +39,27 @@ public class GardenController(IValidator<GardenDto> gardenDtoValidator, IGardenS
         
         return Ok(requested);
     }
+
+    [HttpPost]
+    [Route("All")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
+    public async Task<ActionResult> GetAll(Guid userId)
+    {
+        if (userId == Guid.Empty)
+            return BadRequest("UserId cannot be empty");
+
+        try
+        {
+            return Ok(await gardenService.GetGardensByUser(userId));
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+        catch(NullReferenceException ex)
+        {
+            return BadRequest("Data invalid");
+        }
+    }
 }

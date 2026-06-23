@@ -7,4 +7,5 @@ public interface IGardenService
 {
     Task AddGarden(GardenDto gardenDto);
     Task<GardenDto> GetGardenByReference(GardenReference reference);
+    Task<GardenDto[]> GetGardensByUser(Guid userId);
 }

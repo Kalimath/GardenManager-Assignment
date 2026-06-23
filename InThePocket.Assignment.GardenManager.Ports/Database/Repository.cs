@@ -14,9 +14,9 @@ public class Repository<T>(GardenManagerContext gardenManagerContext) : IReposit
         _modelDbSets.Add(entity);
     }
 
-    public Task<T> Get(Expression<Func<T, bool>> predicate)
+    public Task<T?> Get(Expression<Func<T, bool>> predicate)
     {
-        throw new NotImplementedException();
+        return _modelDbSets.Where(predicate).FirstOrDefaultAsync();
     }
 
     public Task<int> SaveChangesAsync()

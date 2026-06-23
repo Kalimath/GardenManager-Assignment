@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using InThePocket.Assignment.GardenManager.Application.Models.Identity;
 using NSubstitute;
+using NSubstitute.ReturnsExtensions;
 
 namespace InThePocket.Assignment.GardenManager.Application.Tests.Services.GardenServiceTests;
 
@@ -17,13 +18,23 @@ public class AddGardenShould : GardenServiceTestBase
     }
     
     [Fact]
+    public async Task ThrowArgumentNullException_WhenUserIsNull()
+    {
+        UserRepository
+            .Get(Arg.Any<Expression<Func<User, bool>>>())
+            .ReturnsNull();
+        
+        await Assert.ThrowsAsync<NullReferenceException>(() => GardenService.AddGarden(SomeGardenDto));
+    }
+    
+    [Fact]
     public async Task CallGardenMapper()
     {
         await GardenService.AddGarden(SomeGardenDto);
         
         GardenMapper
             .Received(1)
-            .MapToModel(SomeGardenDto);
+            .MapToModel(SomeGardenDto, SomeUser);
     }
     
     [Fact]

@@ -1,13 +1,17 @@
 using FluentValidation;
 using InThePocket.Assignment.GardenManager.Application.Services.Garden;
-using InThePocket.Assignment.GardenManager.Contracts.Dto;
+using InThePocket.Assignment.GardenManager.Contracts.Api;
+using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
 using InThePocket.Assignment.GardenManager.Ports.Adapters.API.Controllers;
 
 namespace InThePocket.Assignment.GardenManager.Ports.Tests.Adapters.API.Controllers.GardenControllerTests;
 
 public class GardenControllerTestBase
 {
-    private static readonly Guid SomeUserId = Guid.NewGuid();
+    protected static readonly Guid SomeUserId = Guid.NewGuid();
+    protected static readonly Guid SomeGardenId = Guid.NewGuid();
+
+    protected static readonly GardenReference SomeGardenReference = new() { GardenId = SomeGardenId, UserId = SomeUserId };
     protected static readonly GardenDto SomeValidGardenDto = new()
     {
         GardenName = "some garden",
@@ -18,7 +22,7 @@ public class GardenControllerTestBase
     };
     protected static readonly GardenDto SomeGardenDtoWithId = new()
     {
-        GardenId = Guid.NewGuid(),
+        GardenId = SomeGardenId,
         GardenName = "some garden",
         TotalSurfaceArea = 100.1,
         LocationDescription = "some location description",

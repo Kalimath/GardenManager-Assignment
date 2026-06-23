@@ -1,4 +1,5 @@
-using InThePocket.Assignment.GardenManager.Contracts.Dto;
+using InThePocket.Assignment.GardenManager.Contracts.Api;
+using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InThePocket.Assignment.GardenManager.Ports.Adapters.API.Controllers;
@@ -6,5 +7,5 @@ namespace InThePocket.Assignment.GardenManager.Ports.Adapters.API.Controllers;
 public interface IGardenController
 {
     Task<ActionResult> Create(GardenDto gardenDto);
-    Task<ActionResult> Get(Guid gardenId);
+    Task<ActionResult> Get([FromBody] GardenReference reference);
 }

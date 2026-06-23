@@ -1,4 +1,4 @@
-namespace InThePocket.Assignment.GardenManager.Contracts.Dto
+namespace InThePocket.Assignment.GardenManager.Contracts.Api.Dto
 {
     public class GardenDto
     {

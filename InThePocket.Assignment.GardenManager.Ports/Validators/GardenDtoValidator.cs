@@ -1,5 +1,5 @@
 using FluentValidation;
-using InThePocket.Assignment.GardenManager.Contracts.Dto;
+using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
 
 namespace InThePocket.Assignment.GardenManager.Ports.Validators;
 

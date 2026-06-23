@@ -1,9 +1,10 @@
-using InThePocket.Assignment.GardenManager.Contracts.Dto;
+using InThePocket.Assignment.GardenManager.Contracts.Api;
+using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
 
 namespace InThePocket.Assignment.GardenManager.Application.Services.Garden;
 
 public interface IGardenService
 {
     Task AddGarden(GardenDto gardenDto);
-    Task<GardenDto> GetGardenById(Guid gardenId);
+    Task<GardenDto> GetGardenByReference(GardenReference reference);
 }

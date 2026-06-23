@@ -1,6 +1,7 @@
 using FluentValidation;
 using InThePocket.Assignment.GardenManager.Application.Services.Garden;
-using InThePocket.Assignment.GardenManager.Contracts.Dto;
+using InThePocket.Assignment.GardenManager.Contracts.Api;
+using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InThePocket.Assignment.GardenManager.Ports.Adapters.API.Controllers;
@@ -25,12 +26,16 @@ public class GardenController(IValidator<GardenDto> gardenDtoValidator, IGardenS
         
     }
 
-    [HttpGet]
-    public async Task<ActionResult> Get([FromBody] Guid gardenId)
+    [HttpPost]
+    [Route("Single")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
+    public async Task<ActionResult> Get([FromBody] GardenReference reference)
     {
-        if (gardenId.Equals(Guid.Empty)) return BadRequest("GardenId cannot be empty");
+        if (reference.GardenId.Equals(Guid.Empty)) return BadRequest("GardenId cannot be empty");
+        if (reference.UserId.Equals(Guid.Empty)) return BadRequest("UserId cannot be empty");
         
-        var requested = await gardenService.GetGardenById(gardenId);
+        var requested = await gardenService.GetGardenByReference(reference);
         
         return Ok(requested);
     }

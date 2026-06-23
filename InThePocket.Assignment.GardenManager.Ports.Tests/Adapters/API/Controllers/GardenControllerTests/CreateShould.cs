@@ -1,5 +1,5 @@
 using FluentValidation.Results;
-using InThePocket.Assignment.GardenManager.Contracts.Dto;
+using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InThePocket.Assignment.GardenManager.Ports.Tests.Adapters.API.Controllers.GardenControllerTests;

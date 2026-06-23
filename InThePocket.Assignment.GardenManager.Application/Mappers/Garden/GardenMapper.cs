@@ -1,5 +1,5 @@
 using InThePocket.Assignment.GardenManager.Application.Models.Identity;
-using InThePocket.Assignment.GardenManager.Contracts.Dto;
+using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
 
 namespace InThePocket.Assignment.GardenManager.Application.Mappers.Garden;
 
@@ -15,6 +15,18 @@ public class GardenMapper : IGardenMapper
             LocationDescription = gardenDto.LocationDescription,
             TargetHumidityLevel = gardenDto.TargetHumidityLevel,
             User = user
+        };
+    }
+
+    public GardenDto MapToDto(Models.Garden gardenModel)
+    {
+        return new GardenDto
+        {
+            GardenId = gardenModel.GardenId,
+            GardenName = gardenModel.GardenName,
+            TotalSurfaceArea = gardenModel.TotalSurfaceArea,
+            LocationDescription = gardenModel.LocationDescription,
+            TargetHumidityLevel = gardenModel.TargetHumidityLevel
         };
     }
 }

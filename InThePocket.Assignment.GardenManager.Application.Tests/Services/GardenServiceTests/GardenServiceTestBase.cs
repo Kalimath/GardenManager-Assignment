@@ -4,15 +4,21 @@ using InThePocket.Assignment.GardenManager.Application.Models;
 using InThePocket.Assignment.GardenManager.Application.Models.Identity;
 using InThePocket.Assignment.GardenManager.Application.Services.Garden;
 using InThePocket.Assignment.GardenManager.Application.Shared;
-using InThePocket.Assignment.GardenManager.Contracts.Dto;
+using InThePocket.Assignment.GardenManager.Contracts.Api;
+using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
 using NSubstitute;
 
 namespace InThePocket.Assignment.GardenManager.Application.Tests.Services.GardenServiceTests;
 
 public class GardenServiceTestBase
 {
-    private static readonly Guid SomeUserId = Guid.NewGuid();
-
+    protected static readonly Guid SomeUserId = Guid.NewGuid();
+    protected static readonly Guid SomeGardenId = Guid.NewGuid();
+    protected static readonly GardenReference SomeGardenReference = new()
+    {
+        GardenId = SomeGardenId,
+        UserId = SomeUserId
+    };
     protected static readonly User SomeUser = new()
     {
         Id = SomeUserId,
@@ -23,6 +29,7 @@ public class GardenServiceTestBase
     };
     protected static readonly GardenDto SomeGardenDto = new()
     {
+        GardenId = SomeGardenId,
         GardenName = "Test Garden",
         TotalSurfaceArea = 23.5,
         LocationDescription = "Test Location",
@@ -32,11 +39,12 @@ public class GardenServiceTestBase
 
     protected static readonly Garden SomeGarden = new()
     {
+        GardenId = SomeGardenId,
         GardenName = "Test Garden",
         TotalSurfaceArea = 23.5,
         LocationDescription = "Test Location",
         TargetHumidityLevel = 55,
-        User = null!
+        User = SomeUser
     };
 
     protected readonly GardenService GardenService;
@@ -56,10 +64,17 @@ public class GardenServiceTestBase
         GardenMapper
             .MapToModel(SomeGardenDto, SomeUser)
             .Returns(SomeGarden);
+        GardenMapper
+            .MapToDto(SomeGarden)
+            .Returns(SomeGardenDto);
         
         UserRepository
             .Get(Arg.Any<Expression<Func<User,bool>>>())
             .Returns(SomeUser);
+
+        GardenRepository
+            .Get(Arg.Any<Expression<Func<Garden, bool>>>())
+            .Returns(SomeGarden);
     }
 
 }

@@ -1,6 +1,6 @@
 using InThePocket.Assignment.GardenManager.Application.Mappers.Garden;
 using InThePocket.Assignment.GardenManager.Application.Models.Identity;
-using InThePocket.Assignment.GardenManager.Contracts.Dto;
+using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
 
 namespace InThePocket.Assignment.GardenManager.Application.Tests.Mappers.Garden;
 
@@ -8,7 +8,7 @@ public class GardenMapperTests
 {
     private static readonly Guid SomeUserId = Guid.NewGuid();
 
-    protected static readonly User SomeUser = new()
+    private static readonly User SomeUser = new()
     {
         Id = SomeUserId,
         FirstName = "John",
@@ -16,15 +16,16 @@ public class GardenMapperTests
         Age = 34,
         Email = "john.doe@email.com"
     };
-    private static readonly GardenDto GardenDto = new()
+    private static readonly GardenDto SomeGardenDto = new()
     {
         GardenName = "Test Garden",
         TotalSurfaceArea = 23.5,
         LocationDescription = "Test Location",
-        TargetHumidityLevel = 55
+        TargetHumidityLevel = 55,
+        UserId = SomeUserId
     };
 
-    private static readonly Models.Garden Garden = new()
+    private static readonly Models.Garden SomeGarden = new()
     {
         GardenName = "Test Garden",
         TotalSurfaceArea = 23.5,
@@ -38,8 +39,16 @@ public class GardenMapperTests
     [Fact]
     public void MapToModel_GivenGardenDto_ReturnsCorrectGardenModel()
     {
-        var result = _gardenMapper.MapToModel(GardenDto, SomeUser);
+        var result = _gardenMapper.MapToModel(SomeGardenDto, SomeUser);
         
-        Assert.Equivalent(Garden, result);
+        Assert.Equivalent(SomeGarden, result);
+    }
+    
+    [Fact]
+    public void MapToDto_GivenGardenModel_ReturnsCorrectGardenDto()
+    {
+        var result = _gardenMapper.MapToDto(SomeGarden);
+        
+        Assert.Equivalent(SomeGardenDto, result);
     }
 }

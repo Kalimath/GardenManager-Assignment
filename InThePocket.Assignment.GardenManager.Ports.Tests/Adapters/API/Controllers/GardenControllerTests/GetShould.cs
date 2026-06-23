@@ -1,3 +1,4 @@
+using FluentValidation.Results;
 using InThePocket.Assignment.GardenManager.Contracts.Api;
 using Microsoft.AspNetCore.Mvc;
 
@@ -5,17 +6,28 @@ namespace InThePocket.Assignment.GardenManager.Ports.Tests.Adapters.API.Controll
 
 public class GetShould : GardenControllerTestBase
 {
-    [Theory]
-    [InlineData ("b3c1a8f4-5d6e-4a7b-9c2e-8f3d7a6e1c4f", "00000000-0000-0000-0000-000000000000")]
-    [InlineData ("00000000-0000-0000-0000-000000000000", "b3c1a8f4-5d6e-4a7b-9c2e-8f3d7a6e1c4f")]
-    public async Task ReturnBadRequest_WhenReferenceInvalid(Guid gardenId, Guid userId)
+    [Fact]
+    public async Task ReturnBadRequest_WhenGardenReferenceNotValid()
     {
-        var invalidReference = new GardenReference {GardenId = gardenId, UserId = userId};
+        var invalidGardenReference = new GardenReference
+        {
+            GardenId = Guid.Empty,
+            UserId = Guid.Empty
+        };
+        var validationResult = new ValidationResult
+        {
+            Errors = [
+                new ValidationFailure {PropertyName = "GardenId"},
+                new ValidationFailure {PropertyName = "UserId"}
+            ]
+        };
+        GardenReferenceValidator
+            .ValidateAsync(invalidGardenReference)
+            .Returns(validationResult);
         
-        var result = await GardenController.Get(invalidReference);
+        var result = await GardenController.Delete(invalidGardenReference);
         
-        var response = Assert.IsType<BadRequestObjectResult>(result);
-        Assert.EndsWith("cannot be empty", response.Value as string);
+        Assert.IsType<BadRequestObjectResult>(result);
     }
     
     [Fact]

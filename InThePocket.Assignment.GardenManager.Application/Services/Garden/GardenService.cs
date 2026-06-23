@@ -46,6 +46,11 @@ public class GardenService(IGardenMapper gardenMapper, IRepository<Models.Garden
         await gardenRepository.SaveChangesAsync();
     }
 
+    public Task RemoveGarden(GardenReference reference)
+    {
+        throw new NotImplementedException();
+    }
+
     private async Task ThrowIdUserWithIdNotExists(Guid userId)
     {
         if (!await UserExists(userId))

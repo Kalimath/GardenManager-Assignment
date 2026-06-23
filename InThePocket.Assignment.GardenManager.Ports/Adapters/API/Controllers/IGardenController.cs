@@ -10,4 +10,5 @@ public interface IGardenController
     Task<ActionResult> Get([FromBody] GardenReference reference);
     Task<ActionResult> GetAll([FromBody] Guid userId);
     Task<ActionResult> Update([FromBody] GardenDto updatedData);
+    Task<ActionResult> Delete(GardenReference reference);
 }

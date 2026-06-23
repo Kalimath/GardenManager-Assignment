@@ -9,4 +9,5 @@ public interface IGardenService
     Task<GardenDto> GetGardenByReference(GardenReference reference);
     Task<GardenDto[]> GetGardensByUser(Guid userId);
     Task UpdateGarden(GardenDto updatedGardenDto);
+    Task RemoveGarden(GardenReference reference);
 }

@@ -1,5 +1,4 @@
 using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute.ExceptionExtensions;
 
@@ -72,7 +71,8 @@ public class GetAllShould : GardenControllerTestBase
         
         var result = await GardenController.GetAll(unknownUserId);
         
-        Assert.IsType<ProblemHttpResult>(result);
+        var response = Assert.IsType<ObjectResult>(result);
+        Assert.Equal(500, response.StatusCode);
     }
     
     

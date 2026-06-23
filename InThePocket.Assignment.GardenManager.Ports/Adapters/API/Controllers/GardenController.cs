@@ -10,7 +10,8 @@ namespace InThePocket.Assignment.GardenManager.Ports.Adapters.API.Controllers;
 [Produces("application/json")]
 [Route("api/v1/[controller]")]
 public class GardenController(
-    IValidator<GardenDto> gardenDtoValidator,
+    IValidator<GardenDto> gardenDtoValidator, 
+    IValidator<GardenReference> gardenReferenceValidator,
     IGardenService gardenService,
     ILogger<GardenController> logger) : ControllerBase, IGardenController
 {
@@ -39,16 +40,12 @@ public class GardenController(
     [ProducesResponseType(400)]
     public async Task<ActionResult> Get([FromBody] GardenReference reference)
     {
-        if (reference.GardenId.Equals(Guid.Empty))
+        var validationResult = await gardenReferenceValidator.ValidateAsync(reference);
+        
+        if (!validationResult.IsValid)
         {
-            logger.LogWarning("GardenId is empty in the {endpoint} request", nameof(Get));
-            return BadRequest("GardenId cannot be empty");
-        }
-
-        if (reference.UserId.Equals(Guid.Empty))
-        {
-            logger.LogWarning("UserId is empty in the {endpoint} request", nameof(Get));
-            return BadRequest("UserId cannot be empty");
+            logger.LogError("Validation failed for garden retrieval: {errors}", validationResult.Errors);
+            return BadRequest("Invalid garden reference provided");
         }
 
         var requested = await gardenService.GetGardenByReference(reference);
@@ -65,7 +62,7 @@ public class GardenController(
     {
         if (userId == Guid.Empty)
         {
-            logger.LogWarning("UserId is empty in the {endpoint} request", nameof(GetAll));
+            logger.LogError("UserId is empty in the {endpoint} request", nameof(GetAll));
             return BadRequest("UserId cannot be empty");
         }
 
@@ -101,6 +98,29 @@ public class GardenController(
         {
             logger.LogError(e, "Error updating garden with ID {gardenId}", updatedData.GardenId);
             return Problem("An error occurred while updating the garden.");
+        }
+        
+        return Accepted();
+    }
+
+    public async Task<ActionResult> Delete(GardenReference reference)
+    {
+        var validationResult = await gardenReferenceValidator.ValidateAsync(reference);
+        
+        if (!validationResult.IsValid)
+        {
+            logger.LogError("Validation failed for garden removal: {errors}", validationResult.Errors);
+            return BadRequest("Invalid garden reference provided");
+        }
+        
+        try
+        {
+            await gardenService.RemoveGarden(reference);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error removing garden with ID {gardenId}", reference.GardenId);
+            return Problem("An error occurred while removing the garden.");
         }
         
         return Accepted();

@@ -17,8 +17,6 @@ services.RegisterDependencies();
 
 services.AddDbContext<GardenManagerContext>
 (options => options.UseSqlServer(builder.Configuration.GetConnectionString("localDb")));
-/*builder.Services.AddDbContext<GardenManagerContext>
-(options => options.UseInMemoryDatabase("GardenManagerDb"));*/
 
 var app = builder.Build();
 
@@ -29,5 +27,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapControllers();
 app.UseHttpsRedirection();
 app.Run();

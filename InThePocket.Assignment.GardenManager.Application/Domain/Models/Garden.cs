@@ -1,6 +1,6 @@
-using InThePocket.Assignment.GardenManager.Application.Models.Identity;
+using InThePocket.Assignment.GardenManager.Application.Domain.Models.Identity;
 
-namespace InThePocket.Assignment.GardenManager.Application.Models;
+namespace InThePocket.Assignment.GardenManager.Application.Domain.Models;
 
 public class Garden
 {
@@ -11,4 +11,5 @@ public class Garden
     public int TargetHumidityLevel { get; init; }
     public Guid UserId { get; init; }
     public User User { get; init; }
+    public ICollection<Plant> Plants { get; set; } = new HashSet<Plant>();
 }

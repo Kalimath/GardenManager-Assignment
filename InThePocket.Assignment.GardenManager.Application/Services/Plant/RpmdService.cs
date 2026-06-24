@@ -1,0 +1,19 @@
+using InThePocket.Assignment.GardenManager.Application.Domain.Models;
+using InThePocket.Assignment.GardenManager.Application.Mappers.Plant;
+using InThePocket.Assignment.GardenManager.Application.Shared;
+using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
+
+namespace InThePocket.Assignment.GardenManager.Application.Services.Plant;
+
+public class RpmdService(
+    IRepository<RealtimePlantMetricData> rpmdRepository, 
+    IRealtimePlantMetricDataMapper mapper) : IRealtimePlantMetricDataService
+{
+    public async Task AddRealtimePlantMetricData(RealtimePlantMetricDataDto rpmdDto)
+    {
+        var rpmd = mapper.MapToModel(rpmdDto);
+        
+        rpmdRepository.Add(rpmd);
+        await rpmdRepository.SaveChangesAsync();
+    }
+}

@@ -1,5 +1,5 @@
+using InThePocket.Assignment.GardenManager.Application.Domain.Models.Identity;
 using InThePocket.Assignment.GardenManager.Application.Mappers.Garden;
-using InThePocket.Assignment.GardenManager.Application.Models.Identity;
 using InThePocket.Assignment.GardenManager.Application.Shared;
 using InThePocket.Assignment.GardenManager.Contracts.Api;
 using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
@@ -9,7 +9,7 @@ namespace InThePocket.Assignment.GardenManager.Application.Services.Garden;
 
 public class GardenService(
     IGardenMapper gardenMapper,
-    IRepository<Models.Garden> gardenRepository,
+    IRepository<Domain.Models.Garden> gardenRepository,
     IRepository<User> userRepository,
     ILogger<GardenService> logger) : IGardenService
 {
@@ -65,6 +65,15 @@ public class GardenService(
         logger.LogInformation("Garden with id {1} has been deleted by {2}.", reference.GardenId, reference.UserId);
     }
 
+    public async Task<double> GetFreeSurfaceAreaOfGardenWithId(Guid gardenId)
+    {
+        var garden = await gardenRepository.Get(g => g.GardenId == gardenId);
+        if (garden == null)
+            throw new NullReferenceException("Garden with id " + gardenId + " does not exist");
+        
+        return garden.TotalSurfaceArea - garden.Plants.Sum(p => p.SurfaceAreaRequired);
+    }
+
     private async Task ThrowIdUserWithIdNotExists(Guid userId)
     {
         if (!await UserExists(userId))
@@ -73,8 +82,6 @@ public class GardenService(
 
     private async Task<bool> UserExists(Guid userId)
     {
-        //Normally the user would be managed by UserManager in the Ports layer.
-        //For the sake of this assignment, I kept it basic.
         return await userRepository.Any(user => user.Id == userId);
     }
 }

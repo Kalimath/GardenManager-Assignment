@@ -1,5 +1,6 @@
-using InThePocket.Assignment.GardenManager.Application.Models;
-using InThePocket.Assignment.GardenManager.Application.Models.Identity;
+using InThePocket.Assignment.GardenManager.Application.Domain.Models;
+using InThePocket.Assignment.GardenManager.Application.Domain.Models.Identity;
+using InThePocket.Assignment.GardenManager.Contracts.Api;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,9 +24,29 @@ public class GardenManagerContext : IdentityDbContext<User, Role, Guid>
             Age = 34,
             Email = "john.doe@email.com"
         }]);
+        
+        /*modelBuilder.Entity<Plant>()
+            .HasOne(e => e.RealtimePlantMetricData)
+            .WithOne(e => e.Plant)
+            .HasForeignKey<RealtimePlantMetricData>(e => e.PlantId);*/
+        
+        modelBuilder.Entity<Plant>()
+            .HasOne(c => c.RealtimePlantMetricData)
+            .WithOne(i => i.Plant)
+            .HasForeignKey<RealtimePlantMetricData>(b => b.PlantId);
+        
+        modelBuilder.Entity<Plant>()
+            .Property(p => p.PlantType)
+            .HasConversion(
+                // To database: enum -> string
+                v => v.ToString(),
+                // From database: string -> enum
+                v => (PlantType)Enum.Parse(typeof(PlantType), v));
 
         base.OnModelCreating(modelBuilder);
     }
     
     public DbSet<Garden> Gardens { get; set; } = null!;
+    public DbSet<Plant> Plants { get; set; } = null!;
+    public DbSet<RealtimePlantMetricData> RealtimePlantMetricData { get; set; } = null!;
 }

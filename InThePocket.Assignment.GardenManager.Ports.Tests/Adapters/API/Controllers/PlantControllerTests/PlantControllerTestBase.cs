@@ -1,6 +1,7 @@
 using FluentValidation;
-using InThePocket.Assignment.GardenManager.Application.Models;
-using InThePocket.Assignment.GardenManager.Application.Services.Garden;
+using InThePocket.Assignment.GardenManager.Application.Services.Plant;
+using InThePocket.Assignment.GardenManager.Contracts.Api;
+using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
 using InThePocket.Assignment.GardenManager.Ports.Adapters.API.Controllers;
 using Microsoft.Extensions.Logging;
 
@@ -18,7 +19,7 @@ public class PlantControllerTestBase
         PlantationDate = DateTime.Today.AddDays(-30),
         SurfaceAreaRequired = 1.5,
         IdealHumidityLevel = 60,
-        RTPMData = new RealtimePlantMetricDataDto(),
+        RealtimePlantMetricData = new RealtimePlantMetricDataDto(),
         GardenId = SomeGardenId
     };
     protected readonly IPlantController PlantController;

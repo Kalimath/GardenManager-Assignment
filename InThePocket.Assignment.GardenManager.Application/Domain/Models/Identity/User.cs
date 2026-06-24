@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
-namespace InThePocket.Assignment.GardenManager.Application.Models.Identity;
+namespace InThePocket.Assignment.GardenManager.Application.Domain.Models.Identity;
 
 public class User : IdentityUser<Guid>
 {

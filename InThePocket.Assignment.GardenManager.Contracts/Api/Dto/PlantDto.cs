@@ -1,4 +1,4 @@
-namespace InThePocket.Assignment.GardenManager.Application.Models;
+namespace InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
 
 public class PlantDto
 {
@@ -9,6 +9,6 @@ public class PlantDto
     public DateTime PlantationDate { get; set; }
     public double SurfaceAreaRequired { get; set; }
     public int IdealHumidityLevel { get; set; }
-    public RealtimePlantMetricDataDto RTPMData { get; set; }
+    public RealtimePlantMetricDataDto RealtimePlantMetricData { get; set; }
     public Guid GardenId { get; set; }
 }

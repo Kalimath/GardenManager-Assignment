@@ -4,6 +4,6 @@ namespace InThePocket.Assignment.GardenManager.Application.Mappers.Garden;
 
 public interface IGardenMapper
 {
-    Models.Garden MapToModel(GardenDto gardenDto);
-    GardenDto MapToDto(Models.Garden gardenModel);
+    Domain.Models.Garden MapToModel(GardenDto gardenDto);
+    GardenDto MapToDto(Domain.Models.Garden gardenModel);
 }

@@ -1,6 +1,6 @@
 using FluentValidation;
-using InThePocket.Assignment.GardenManager.Application.Models;
-using InThePocket.Assignment.GardenManager.Application.Services.Garden;
+using InThePocket.Assignment.GardenManager.Application.Services.Plant;
+using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InThePocket.Assignment.GardenManager.Ports.Adapters.API.Controllers;
@@ -34,7 +34,7 @@ public class PlantController(
         catch(Exception ex)
         {
             logger.LogError(ex, "Error adding plant {plantName} to garden {gardenId}", plantDto.PlantName, plantDto.GardenId);
-            return Problem("An error occurred while adding the plant.");
+            return Problem("An error occurred while adding the plant. "+ ex.Message);
         }
     }
 }

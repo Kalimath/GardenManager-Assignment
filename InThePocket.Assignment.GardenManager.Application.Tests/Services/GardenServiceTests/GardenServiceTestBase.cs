@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
+using InThePocket.Assignment.GardenManager.Application.Domain.Models;
+using InThePocket.Assignment.GardenManager.Application.Domain.Models.Identity;
 using InThePocket.Assignment.GardenManager.Application.Mappers.Garden;
-using InThePocket.Assignment.GardenManager.Application.Models;
-using InThePocket.Assignment.GardenManager.Application.Models.Identity;
 using InThePocket.Assignment.GardenManager.Application.Services.Garden;
 using InThePocket.Assignment.GardenManager.Application.Shared;
 using InThePocket.Assignment.GardenManager.Contracts.Api;

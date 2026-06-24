@@ -1,4 +1,5 @@
-using InThePocket.Assignment.GardenManager.Application.Models;
+using InThePocket.Assignment.GardenManager.Contracts.Api;
+using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InThePocket.Assignment.GardenManager.Ports.Tests.Adapters.API.Controllers.PlantControllerTests;

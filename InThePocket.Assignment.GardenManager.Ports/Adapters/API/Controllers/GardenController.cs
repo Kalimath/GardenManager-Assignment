@@ -18,7 +18,6 @@ public class GardenController(
 
     [HttpPost]
     [ProducesResponseType(201)]
-    [ProducesResponseType(400)]
     public async Task<ActionResult> Create(GardenDto gardenDto)
     {
         var validationResult = await gardenDtoValidator.ValidateAsync(gardenDto);
@@ -44,7 +43,6 @@ public class GardenController(
     [HttpPost]
     [Route("Single")]
     [ProducesResponseType(200)]
-    [ProducesResponseType(400)]
     public async Task<ActionResult> Get([FromBody] GardenReference reference)
     {
         var validationResult = await gardenReferenceValidator.ValidateAsync(reference);
@@ -63,8 +61,6 @@ public class GardenController(
     [HttpPost]
     [Route("All")]
     [ProducesResponseType(200)]
-    [ProducesResponseType(400)]
-    [ProducesResponseType(401)]
     public async Task<ActionResult> GetAll(Guid userId)
     {
         if (userId == Guid.Empty)
@@ -86,7 +82,6 @@ public class GardenController(
 
     [HttpPut]
     [ProducesResponseType(202)]
-    [ProducesResponseType(400)]
     public async Task<ActionResult> Update([FromBody] GardenDto updatedData)
     {
         var validationResult = await gardenDtoValidator.ValidateAsync(updatedData);
@@ -110,6 +105,8 @@ public class GardenController(
         return Accepted();
     }
 
+    [HttpDelete]
+    [ProducesResponseType(202)]
     public async Task<ActionResult> Delete(GardenReference reference)
     {
         var validationResult = await gardenReferenceValidator.ValidateAsync(reference);

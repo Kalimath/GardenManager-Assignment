@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using InThePocket.Assignment.GardenManager.Application.Models.Identity;
+using InThePocket.Assignment.GardenManager.Application.Domain.Models.Identity;
 using NSubstitute;
 
 namespace InThePocket.Assignment.GardenManager.Application.Tests.Services.GardenServiceTests;

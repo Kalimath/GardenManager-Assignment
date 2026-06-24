@@ -1,5 +1,5 @@
+using InThePocket.Assignment.GardenManager.Application.Domain.Models.Identity;
 using InThePocket.Assignment.GardenManager.Application.Mappers.Garden;
-using InThePocket.Assignment.GardenManager.Application.Models.Identity;
 using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
 
 namespace InThePocket.Assignment.GardenManager.Application.Tests.Mappers.Garden;
@@ -27,7 +27,7 @@ public class GardenMapperTests
         UserId = SomeUserId
     };
 
-    private static readonly Models.Garden SomeGarden = new()
+    private static readonly Domain.Models.Garden SomeGarden = new()
     {
         GardenId = SomeGardenId,
         GardenName = "Test Garden",

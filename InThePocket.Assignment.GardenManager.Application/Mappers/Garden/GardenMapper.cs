@@ -4,9 +4,9 @@ namespace InThePocket.Assignment.GardenManager.Application.Mappers.Garden;
 
 public class GardenMapper : IGardenMapper
 {
-    public Models.Garden MapToModel(GardenDto gardenDto)
+    public Domain.Models.Garden MapToModel(GardenDto gardenDto)
     {
-        return new Models.Garden
+        return new Domain.Models.Garden
         {
             GardenId = gardenDto.GardenId,
             GardenName = gardenDto.GardenName,
@@ -17,7 +17,7 @@ public class GardenMapper : IGardenMapper
         };
     }
 
-    public GardenDto MapToDto(Models.Garden gardenModel)
+    public GardenDto MapToDto(Domain.Models.Garden gardenModel)
     {
         return new GardenDto
         {

@@ -10,4 +10,5 @@ public interface IGardenService
     Task<GardenDto[]> GetGardensByUser(Guid userId);
     Task UpdateGarden(GardenDto updatedGardenDto);
     Task RemoveGarden(GardenReference reference);
+    Task<double> GetFreeSurfaceAreaOfGardenWithId(Guid gardenId);
 }

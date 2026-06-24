@@ -34,8 +34,9 @@ public class PlantServiceTestBase
         var rpmdService = Substitute.For<IRealtimePlantMetricDataService>();
         var gardenService = Substitute.For<IGardenService>();
         var plantMapper = Substitute.For<IPlantMapper>();
+        var rpmdMapper = Substitute.For<IRealtimePlantMetricDataMapper>();
         var logger = Substitute.For<ILogger<PlantService>>();
         
-        PlantService = new PlantService(plantRepository, gardenService, rpmdService, plantMapper, logger);
+        PlantService = new PlantService(plantRepository, gardenService, rpmdService, plantMapper, rpmdMapper, logger);
     }
 }

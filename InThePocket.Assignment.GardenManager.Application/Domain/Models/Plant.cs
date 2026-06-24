@@ -13,6 +13,6 @@ public class Plant
     public int IdealHumidityLevel { get; init; }
     public Guid GardenId { get; init; }
     
-    public RealtimePlantMetricData? RealtimePlantMetricData { get; init; }
+    public RealtimePlantMetricData? RealtimePlantMetricData { get; set; }
     
 }

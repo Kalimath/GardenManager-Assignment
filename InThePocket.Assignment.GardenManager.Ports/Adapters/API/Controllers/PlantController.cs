@@ -71,4 +71,28 @@ public class PlantController(
             return Problem("An error occurred while retrieving all plants. "+ ex.Message);
         }
     }
+    
+    [HttpPut]
+    [ProducesResponseType(201)]
+    public async Task<ActionResult> Update(PlantDto plantDto)
+    {
+        var validationResult = await plantDtoValidator.ValidateAsync(plantDto);
+
+        if (!validationResult.IsValid)
+        {
+            logger.LogError("Validation failed for plant update: {errors}", validationResult.Errors);
+            return BadRequest(validationResult);
+        }
+        
+        try
+        {
+            await plantService.UpdatePlant(plantDto);
+            return Ok();
+        }
+        catch(Exception ex)
+        {
+            logger.LogError(ex, "Error updating plant {plantName} in garden {gardenId}", plantDto.PlantName, plantDto.GardenId);
+            return Problem("An error occurred while updating the plant. "+ ex.Message);
+        }
+    }
 }

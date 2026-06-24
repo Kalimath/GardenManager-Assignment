@@ -24,4 +24,12 @@ public class RpmdService(
         
         return mapper.MapToDto(rpmd);
     }
+
+    public async Task UpdateRealtimePlantMetricData(RealtimePlantMetricDataDto rpmdDto)
+    {
+        var rpmd = mapper.MapToModel(rpmdDto);
+        
+        rpmdRepository.Update(rpmd);
+        await rpmdRepository.SaveChangesAsync();
+    }
 }

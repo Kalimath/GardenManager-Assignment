@@ -11,6 +11,7 @@ public class PlantService(
     IGardenService gardenService,
     IRealtimePlantMetricDataService rpmdService,
     IPlantMapper plantMapper,
+    IRealtimePlantMetricDataMapper rpmdMapper,
     ILogger<PlantService> logger) : IPlantService
 {
 
@@ -49,6 +50,18 @@ public class PlantService(
         plantDto.RealtimePlantMetricData = realtimePlantMetricData;
         
         return plantDto;
+    }
+
+    public async Task UpdatePlant(PlantDto plantDto)
+    {
+        await ThrowIfNotEnoughFreeSurfaceAreaInGarden(plantDto.GardenId, plantDto.SurfaceAreaRequired);
+        
+        var plantModel = plantMapper.MapToModel(plantDto);
+        
+        plantRepository.Update(plantModel);
+        await plantRepository.SaveChangesAsync();
+        
+        await rpmdService.UpdateRealtimePlantMetricData(plantDto.RealtimePlantMetricData);
     }
 
     private async Task<Guid> GetPlantIdByNameAndGardenId(string plantName, Guid gardenId)

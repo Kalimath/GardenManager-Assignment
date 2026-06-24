@@ -4,6 +4,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InThePocket.Assignment.Gard
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InThePocket.Assignment.GardenManager.Ports.Tests", "InThePocket.Assignment.GardenManager.Ports.Tests\InThePocket.Assignment.GardenManager.Ports.Tests.csproj", "{5186E0DC-6249-4B77-97BE-B3DAB3D7E5C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InThePocket.Assignment.GardenManager.Contracts", "InThePocket.Assignment.GardenManager.Contracts\InThePocket.Assignment.GardenManager.Contracts.csproj", "{7BBC1DE7-EB8C-4E01-B29A-A9AF1A19F34F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InThePocket.Assignment.GardenManager.Application", "InThePocket.Assignment.GardenManager.Application\InThePocket.Assignment.GardenManager.Application.csproj", "{CDA18083-A895-42B3-B747-4C528872D611}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InThePocket.Assignment.GardenManager.Application.Tests", "InThePocket.Assignment.GardenManager.Application.Tests\InThePocket.Assignment.GardenManager.Application.Tests.csproj", "{1963064D-1FCD-4279-A0A5-CC5A47FA4B69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +24,17 @@ Global
 		{5186E0DC-6249-4B77-97BE-B3DAB3D7E5C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5186E0DC-6249-4B77-97BE-B3DAB3D7E5C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5186E0DC-6249-4B77-97BE-B3DAB3D7E5C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BBC1DE7-EB8C-4E01-B29A-A9AF1A19F34F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BBC1DE7-EB8C-4E01-B29A-A9AF1A19F34F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BBC1DE7-EB8C-4E01-B29A-A9AF1A19F34F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BBC1DE7-EB8C-4E01-B29A-A9AF1A19F34F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDA18083-A895-42B3-B747-4C528872D611}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDA18083-A895-42B3-B747-4C528872D611}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDA18083-A895-42B3-B747-4C528872D611}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDA18083-A895-42B3-B747-4C528872D611}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1963064D-1FCD-4279-A0A5-CC5A47FA4B69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1963064D-1FCD-4279-A0A5-CC5A47FA4B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1963064D-1FCD-4279-A0A5-CC5A47FA4B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1963064D-1FCD-4279-A0A5-CC5A47FA4B69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

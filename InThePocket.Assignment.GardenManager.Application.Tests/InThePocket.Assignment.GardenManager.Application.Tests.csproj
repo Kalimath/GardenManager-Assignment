@@ -24,7 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\InThePocket.Assignment.GardenManager.Ports\InThePocket.Assignment.GardenManager.Ports.csproj" />
+      <ProjectReference Include="..\InThePocket.Assignment.GardenManager.Application\InThePocket.Assignment.GardenManager.Application.csproj" />
     </ItemGroup>
 
 </Project>

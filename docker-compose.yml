@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # SQL Server Database Container
+  garden-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: garden-manager-db
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=YourStrong@Pass123!
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql-data:/var/opt/mssql
+    networks:
+      - garden-network
+
+  # .NET Web API Container
+  garden-api:
+    image: garden-manager-api:latest
+    container_name: garden-manager-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=garden-db;Database=GardenManagerDb;User Id=sa;Password=YourStrong@Pass123!;TrustServerCertificate=True;
+    depends_on:
+      - garden-db
+    networks:
+      - garden-network
+
+volumes:
+  sql-data:
+
+networks:
+  garden-network:
+    driver: bridge

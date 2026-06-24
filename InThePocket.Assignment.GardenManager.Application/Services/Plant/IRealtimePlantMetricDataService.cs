@@ -1,0 +1,10 @@
+using InThePocket.Assignment.GardenManager.Contracts.Api.Dto;
+
+namespace InThePocket.Assignment.GardenManager.Application.Services.Plant;
+
+public interface IRealtimePlantMetricDataService
+{
+    Task AddRealtimePlantMetricData(RealtimePlantMetricDataDto rpmdDto);
+    Task<RealtimePlantMetricDataDto> GetRealtimePlantMetricDataByPlantId(Guid plantId);
+    Task UpdateRealtimePlantMetricData(RealtimePlantMetricDataDto rpmdDto);
+}

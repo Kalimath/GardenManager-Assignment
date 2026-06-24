@@ -53,9 +53,15 @@ public class GardenController(
             return BadRequest("Invalid garden reference provided");
         }
 
-        var requested = await gardenService.GetGardenByReference(reference);
-        
-        return Ok(requested);
+        try
+        {
+            return Ok(await gardenService.GetGardenByReference(reference));
+        }
+        catch(Exception ex)
+        {
+            logger.LogError(ex, "Error retrieving garden with Id {gardenId}", reference.GardenId);
+            return Problem("Unable to retrieve garden for the specified user");
+        }
     }
 
     [HttpGet]

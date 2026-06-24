@@ -16,7 +16,7 @@ public class GardenService(
 
     public async Task AddGarden(GardenDto gardenDto)
     {
-        await ThrowIdUserWithIdNotExists(gardenDto.UserId);
+        await ThrowIfUserWithIdNotExists(gardenDto.UserId);
 
         var model = gardenMapper.MapToModel(gardenDto);
 
@@ -26,17 +26,17 @@ public class GardenService(
 
     public async Task<GardenDto> GetGardenByReference(GardenReference reference)
     {
-        await ThrowIdUserWithIdNotExists(reference.UserId);
+        await ThrowIfUserWithIdNotExists(reference.UserId);
         
         var gardenModel = await gardenRepository.Get(g => g.GardenId == reference.GardenId && g.User.Id == reference.UserId) 
                         ?? throw new NullReferenceException("The requested garden can not be found");
-
+        
         return gardenMapper.MapToDto(gardenModel);
     }
 
     public async Task<GardenDto[]> GetGardensByUser(Guid userId)
     {
-        await ThrowIdUserWithIdNotExists(userId);
+        await ThrowIfUserWithIdNotExists(userId);
         
         var gardenModels = await gardenRepository.GetList(g => g.User.Id == userId);
         
@@ -45,7 +45,7 @@ public class GardenService(
 
     public async Task UpdateGarden(GardenDto updatedGardenDto)
     {
-        await ThrowIdUserWithIdNotExists(updatedGardenDto.UserId);
+        await ThrowIfUserWithIdNotExists(updatedGardenDto.UserId);
         
         gardenRepository.Update(gardenMapper.MapToModel(updatedGardenDto));
         await gardenRepository.SaveChangesAsync();
@@ -53,7 +53,7 @@ public class GardenService(
 
     public async Task RemoveGarden(GardenReference reference)
     {
-        await ThrowIdUserWithIdNotExists(reference.UserId);
+        await ThrowIfUserWithIdNotExists(reference.UserId);
 
         var gardenToRemove =
             await gardenRepository.Get(g => g.GardenId == reference.GardenId && g.User.Id == reference.UserId) 
@@ -74,7 +74,7 @@ public class GardenService(
         return garden.TotalSurfaceArea - garden.Plants.Sum(p => p.SurfaceAreaRequired);
     }
 
-    private async Task ThrowIdUserWithIdNotExists(Guid userId)
+    private async Task ThrowIfUserWithIdNotExists(Guid userId)
     {
         if (!await UserExists(userId))
             throw new ArgumentException("User with given id does not exist");

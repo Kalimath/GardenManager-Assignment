@@ -97,7 +97,7 @@ public class PlantController(
         try
         {
             await plantService.UpdatePlant(plantDto);
-            return Ok();
+            return Accepted();
         }
         catch(Exception ex)
         {

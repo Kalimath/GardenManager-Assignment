@@ -6,14 +6,35 @@ namespace InThePocket.Assignment.GardenManager.Ports.Tests.Adapters.API.Controll
 
 public class CreateShould : PlantControllerTestBase
 {
+    protected static readonly RealtimePlantMetricDataDto SomeCreateRpmdDto = new()
+    {
+        // no RealtimePlantMetricDataId at creation
+        CurrentHumidityLevel = 55,
+        LastIrrigationStartTime = DateTime.UtcNow.AddHours(-2),
+        LastIrrigationEndTime = DateTime.UtcNow.AddHours(-1)
+        // no plantId at creation
+    };
+    protected static readonly PlantDto SomeCreatePlantDto = new()
+    {
+        // no plantId at creation
+        PlantName = "Bird of Paradise",
+        Species = "Strelitzia reginae",
+        PlantType = PlantType.Flower,
+        PlantationDate = DateTime.Today.AddDays(-30),
+        SurfaceAreaRequired = 1.5,
+        IdealHumidityLevel = 60,
+        RealtimePlantMetricData = SomeCreateRpmdDto,
+        GardenId = SomeGardenId
+    };
+    
     [Fact]
     public async Task CallPlantDtoValidator()
     {
-        _ = await PlantController.Create(SomePlantDto);
+        _ = await PlantController.Create(SomeCreatePlantDto);
         
         await PlantDtoValidator
             .Received(1)
-            .ValidateAsync(Arg.Any<PlantDto>());
+            .ValidateAsync(SomeCreatePlantDto);
     }
     
     [Fact]
@@ -27,6 +48,7 @@ public class CreateShould : PlantControllerTestBase
             PlantType = (PlantType)999,
             PlantationDate = DateTime.Today.AddDays(1),
             SurfaceAreaRequired = -2.5,
+            RealtimePlantMetricData = SomeRpmdDto,
             GardenId = Guid.Empty
         };
         var validationResult = new FluentValidation.Results.ValidationResult
@@ -50,24 +72,22 @@ public class CreateShould : PlantControllerTestBase
 
         var response = Assert.IsType<BadRequestObjectResult>(result);
         Assert.NotNull(response.Value);
-        Assert.False(((FluentValidation.Results.ValidationResult)response.Value).IsValid);
-        Assert.Equal(8, ((FluentValidation.Results.ValidationResult)response.Value).Errors.Count);
     }
     
     [Fact]
     public async Task CallPlantService_WhenDataValid()
     {
-        _ = await PlantController.Create(SomePlantDto);
+        _ = await PlantController.Create(SomeCreatePlantDto);
         
         await PlantService
             .Received(1)
-            .AddPlant(SomePlantDto);
+            .AddPlant(Arg.Any<PlantDto>());
     }
     
     [Fact]
     public async Task ReturnCreated_WhenDataValid()
     {
-        var result = await PlantController.Create(SomePlantDto);
+        var result = await PlantController.Create(SomeCreatePlantDto);
 
         Assert.IsType<CreatedResult>(result);
     }

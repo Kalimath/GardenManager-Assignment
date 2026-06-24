@@ -24,15 +24,17 @@ public class PlantControllerTestBase
     };
     protected readonly IPlantController PlantController;
     protected readonly IValidator<PlantDto> PlantDtoValidator;
+    protected readonly IValidator<RealtimePlantMetricDataDto> RpmdDtoValidator;
     protected readonly IPlantService PlantService;
 
     protected PlantControllerTestBase()
     {
         PlantDtoValidator = Substitute.For<IValidator<PlantDto>>();
+        RpmdDtoValidator = Substitute.For<IValidator<RealtimePlantMetricDataDto>>();
         PlantService = Substitute.For<IPlantService>();
         var logger = Substitute.For<ILogger<PlantController>>();
         
-        PlantController = new PlantController(PlantDtoValidator, PlantService, logger);
+        PlantController = new PlantController(PlantDtoValidator, RpmdDtoValidator, PlantService, logger);
         
         //substitutes
         var validValidationResult = new FluentValidation.Results.ValidationResult();

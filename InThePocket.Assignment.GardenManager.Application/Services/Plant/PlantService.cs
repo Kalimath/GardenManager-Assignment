@@ -64,6 +64,17 @@ public class PlantService(
         await rpmdService.UpdateRealtimePlantMetricData(plantDto.RealtimePlantMetricData);
     }
 
+    public async Task RemovePlant(Guid plantId)
+    {
+        var plant = await plantRepository.Get(p => p.PlantId == plantId) 
+                    ?? throw new NullReferenceException($"Plant with id {plantId} not found");
+        
+        plantRepository.Delete(plant);
+        await plantRepository.SaveChangesAsync();
+        
+        logger.LogInformation("Plant with id {1} has been deleted.", plantId);
+    }
+
     private async Task<Guid> GetPlantIdByNameAndGardenId(string plantName, Guid gardenId)
     {
         var plant = await plantRepository.Get(p => p.PlantName == plantName && p.GardenId == gardenId);

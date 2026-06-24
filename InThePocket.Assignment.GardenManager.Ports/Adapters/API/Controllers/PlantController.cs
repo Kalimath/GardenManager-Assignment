@@ -10,6 +10,7 @@ namespace InThePocket.Assignment.GardenManager.Ports.Adapters.API.Controllers;
 [Route("api/v1/[controller]")]
 public class PlantController(
     IValidator<PlantDto> plantDtoValidator,
+    IValidator<RealtimePlantMetricDataDto> rpmdValidator,
     IPlantService plantService,
     ILogger<PlantController> logger) : Controller, IPlantController
 {
@@ -19,11 +20,13 @@ public class PlantController(
     public async Task<ActionResult> Create(PlantDto plantDto)
     {
         var validationResult = await plantDtoValidator.ValidateAsync(plantDto);
+        var rpmdValidationResult = await rpmdValidator.ValidateAsync(plantDto.RealtimePlantMetricData);
 
-        if (!validationResult.IsValid)
+        if (!validationResult.IsValid || !rpmdValidationResult.IsValid)
         {
-            logger.LogError("Validation failed for plant creation: {errors}", validationResult.Errors);
-            return BadRequest(validationResult);
+            var mergedErrors = validationResult.Errors.Concat(rpmdValidationResult.Errors).ToList();
+            logger.LogError("Validation failed for plant creation: {errors}", mergedErrors);
+            return BadRequest(mergedErrors.Select(failure => failure.ErrorMessage));
         }
         
         try
@@ -73,15 +76,17 @@ public class PlantController(
     }
     
     [HttpPut]
-    [ProducesResponseType(201)]
+    [ProducesResponseType(202)]
     public async Task<ActionResult> Update(PlantDto plantDto)
     {
         var validationResult = await plantDtoValidator.ValidateAsync(plantDto);
+        var rpmdValidationResult = await rpmdValidator.ValidateAsync(plantDto.RealtimePlantMetricData);
 
-        if (!validationResult.IsValid)
+        if (!validationResult.IsValid || !rpmdValidationResult.IsValid)
         {
-            logger.LogError("Validation failed for plant update: {errors}", validationResult.Errors);
-            return BadRequest(validationResult);
+            var mergedErrors = validationResult.Errors.Concat(rpmdValidationResult.Errors).ToList();
+            logger.LogError("Validation failed for plant update: {errors}", mergedErrors);
+            return BadRequest(mergedErrors.Select(failure => failure.ErrorMessage));
         }
         
         try
@@ -93,6 +98,22 @@ public class PlantController(
         {
             logger.LogError(ex, "Error updating plant {plantName} in garden {gardenId}", plantDto.PlantName, plantDto.GardenId);
             return Problem("An error occurred while updating the plant. "+ ex.Message);
+        }
+    }
+    
+    [HttpDelete]
+    [ProducesResponseType(202)]
+    public async Task<ActionResult> Delete(Guid plantId)
+    {
+        try
+        {
+            await plantService.RemovePlant(plantId);
+            return Accepted();
+        }
+        catch(Exception ex)
+        {
+            logger.LogError(ex, "Error deleting plant {plantId}", plantId);
+            return Problem("An error occurred while deleting the plant. "+ ex.Message);
         }
     }
 }

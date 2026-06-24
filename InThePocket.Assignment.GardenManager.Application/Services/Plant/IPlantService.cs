@@ -8,4 +8,5 @@ public interface IPlantService
     Task<PlantDto[]> GetAllPlants();
     Task<PlantDto> GetPlantById(Guid plantId);
     Task UpdatePlant(PlantDto plantDto);
+    Task RemovePlant(Guid plantId);
 }

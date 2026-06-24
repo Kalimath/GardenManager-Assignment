@@ -21,7 +21,17 @@ public class PlantMapper : IPlantMapper
 
     public PlantDto MapToDto(Domain.Models.Plant plantModel)
     {
-        throw new NotImplementedException();
+        return new PlantDto
+        {
+            PlantId = plantModel.PlantId,
+            PlantName = plantModel.PlantName,
+            Species = plantModel.Species,
+            PlantType = plantModel.PlantType,
+            PlantationDate = plantModel.PlantationDate,
+            SurfaceAreaRequired = plantModel.SurfaceAreaRequired,
+            IdealHumidityLevel = plantModel.IdealHumidityLevel,
+            GardenId = plantModel.GardenId
+        };
     }
     
     

@@ -5,4 +5,5 @@ namespace InThePocket.Assignment.GardenManager.Application.Services.Plant;
 public interface IRealtimePlantMetricDataService
 {
     Task AddRealtimePlantMetricData(RealtimePlantMetricDataDto rpmdDto);
+    Task<RealtimePlantMetricDataDto> GetRealtimePlantMetricDataByPlantId(Guid plantId);
 }

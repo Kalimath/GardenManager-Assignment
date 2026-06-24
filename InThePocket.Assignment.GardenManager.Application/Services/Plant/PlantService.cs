@@ -30,7 +30,27 @@ public class PlantService(
         
         logger.LogInformation("Plant {plantName} added to garden {gardenId}", plantDto.PlantName, plantDto.GardenId);
     }
-    
+
+    public async Task<PlantDto[]> GetAllPlants()
+    {
+        var plants = await plantRepository.GetList(p => true);
+        
+        return plants.Select(plantMapper.MapToDto).ToArray();
+    }
+
+    public async Task<PlantDto> GetPlantById(Guid plantId)
+    {
+        var plant = await plantRepository.Get(p => p.PlantId == plantId);
+        if (plant == null) 
+            throw new NullReferenceException($"Plant with id {plantId} not found");
+        var realtimePlantMetricData = await rpmdService.GetRealtimePlantMetricDataByPlantId(plantId);
+        
+        var plantDto = plantMapper.MapToDto(plant);
+        plantDto.RealtimePlantMetricData = realtimePlantMetricData;
+        
+        return plantDto;
+    }
+
     private async Task<Guid> GetPlantIdByNameAndGardenId(string plantName, Guid gardenId)
     {
         var plant = await plantRepository.Get(p => p.PlantName == plantName && p.GardenId == gardenId);

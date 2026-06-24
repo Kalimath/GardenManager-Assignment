@@ -41,7 +41,7 @@ public class GardenController(
     }
 
     [HttpPost]
-    [Route("Single")]
+    [Route("Details")]
     [ProducesResponseType(200)]
     public async Task<ActionResult> Get([FromBody] GardenReference reference)
     {
@@ -58,7 +58,7 @@ public class GardenController(
         return Ok(requested);
     }
 
-    [HttpPost]
+    [HttpGet]
     [Route("All")]
     [ProducesResponseType(200)]
     public async Task<ActionResult> GetAll(Guid userId)

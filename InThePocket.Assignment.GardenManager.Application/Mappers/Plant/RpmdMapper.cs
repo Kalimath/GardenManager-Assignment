@@ -19,6 +19,13 @@ public class RpmdMapper : IRealtimePlantMetricDataMapper
 
     public RealtimePlantMetricDataDto MapToDto(RealtimePlantMetricData rpmdModel)
     {
-        throw new NotImplementedException();
+        return new RealtimePlantMetricDataDto()
+        {
+            RealtimePlantMetricDataId = rpmdModel.RealtimePlantMetricDataId,
+            CurrentHumidityLevel = rpmdModel.CurrentHumidityLevel,
+            LastIrrigationStartTime = rpmdModel.LastIrrigationStartTime,
+            LastIrrigationEndTime = rpmdModel.LastIrrigationEndTime,
+            PlantId = rpmdModel.PlantId
+        };
     }
 }

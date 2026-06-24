@@ -37,4 +37,38 @@ public class PlantController(
             return Problem("An error occurred while adding the plant. "+ ex.Message);
         }
     }
+    
+    [HttpGet]
+    [Route("All")]
+    [ProducesResponseType(200)]
+    public async Task<ActionResult> GetAll()
+    {
+        try
+        {
+            var plants = await plantService.GetAllPlants();
+            return Ok(plants);
+        }
+        catch(Exception ex)
+        {
+            logger.LogError(ex, "Error retrieving all plants");
+            return Problem("An error occurred while retrieving all plants. "+ ex.Message);
+        }
+    }
+    
+    [HttpGet]
+    [Route("Details")]
+    [ProducesResponseType(200)]
+    public async Task<ActionResult> Get(Guid plantId)
+    {
+        try
+        {
+            var plants = await plantService.GetPlantById(plantId);
+            return Ok(plants);
+        }
+        catch(Exception ex)
+        {
+            logger.LogError(ex, "Error retrieving all plants");
+            return Problem("An error occurred while retrieving all plants. "+ ex.Message);
+        }
+    }
 }

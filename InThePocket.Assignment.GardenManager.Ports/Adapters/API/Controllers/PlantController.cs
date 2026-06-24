@@ -21,6 +21,11 @@ public class PlantController(
     {
         var validationResult = await plantDtoValidator.ValidateAsync(plantDto);
         var rpmdValidationResult = await rpmdValidator.ValidateAsync(plantDto.RealtimePlantMetricData);
+        
+        if (!(plantDto.RealtimePlantMetricData.RealtimePlantMetricDataId == Guid.Empty))
+            validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure("RealtimePlantMetricDataId", "RealtimePlantMetricDataId must be empty when adding a new plant."));
+        if (!(plantDto.PlantId == Guid.Empty) || !(plantDto.RealtimePlantMetricData.PlantId == Guid.Empty))
+            validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure("PlantId", "PlantId must be empty when adding a new plant."));
 
         if (!validationResult.IsValid || !rpmdValidationResult.IsValid)
         {
